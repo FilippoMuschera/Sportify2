@@ -165,7 +165,7 @@ public class BookMatchCLI {
         if(courtsList.isEmpty()){
             for (Iterator<String> iterator = sportCenters.keySet().iterator(); iterator.hasNext(); ) {
                 String key = iterator.next();
-                if(key == selectedSportCenter){
+                if(key.equals(selectedSportCenter)){
                     sportCenters.remove(key);
                     break;
                 }
