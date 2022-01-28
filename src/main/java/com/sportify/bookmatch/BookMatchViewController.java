@@ -196,7 +196,7 @@ public class BookMatchViewController {
 
     private void displayCourts(List<SportCourt> courtList) throws SportCenterException{
 
-        if(courtList.size() == 0){
+        if(courtList.isEmpty()){
             sportCenterList.remove(selectedSportCenter);
             deletedSportCenter();
             displaySportCenters(sportCenterList);

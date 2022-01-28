@@ -42,8 +42,7 @@ public class SportCenterState implements BMStateInterface {
             }
             catch(SportCenterException exception2){
                 user.getPreferences().setRadiusOfInterest(currentDistance);
-                SportCenterException excp = new SportCenterException("il retry ha fallito, cambiare indirizzo");
-                throw excp;
+                throw new SportCenterException("il retry ha fallito, cambiare indirizzo");
             }
             user.getPreferences().setRadiusOfInterest(currentDistance);
         }

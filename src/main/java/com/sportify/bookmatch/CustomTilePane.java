@@ -3,7 +3,6 @@ package com.sportify.bookmatch;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.TilePane;
-import javafx.scene.text.Font;
 
 public class CustomTilePane {
     TilePane customTP;

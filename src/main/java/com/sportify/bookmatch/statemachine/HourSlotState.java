@@ -28,9 +28,8 @@ public class HourSlotState implements BMStateInterface {
                 timeTable.add(t);
             }
         }
-        if(timeTable.size() == 0){
-            SportCenterException exception = new SportCenterException("List<TimeSlot> is null, change the selected court.");
-            throw exception;
+        if(timeTable.isEmpty()){
+            throw new SportCenterException("List<TimeSlot> is null, change the selected court.");
         }
         bookMatchController.setTimeTable(timeTable);
     }
