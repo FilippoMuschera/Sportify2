@@ -107,13 +107,22 @@ public class JoinMatchController {
         this.evaluateIndexValues();
         int min = Math.min(this.resultSet.getElements().size(), bean.getMaxResults());
 
-        //TODO CASO LISTA VUOTA
+        this.checkForEmptyList(min);
+
         this.shrinkResult(min);
 
 
         bean.setResultSet(this.resultSet);
 
 
+    }
+
+    private void checkForEmptyList(int min) throws SportCenterException {
+        if (min == 0){ //ci sono sport center che rispettano i parametri, ma non ci sono joinable matches in questi sc
+            // e allora la lista degli sport center sarà vuota
+            throw new SportCenterException("Non ci sono joinable matches disponibili");
+
+        }
     }
 
     private void shrinkResult(int min){

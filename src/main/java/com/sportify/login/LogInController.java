@@ -2,10 +2,10 @@ package com.sportify.login;
 
 import com.sportify.login.exceptions.LoginFailedException;
 import com.sportify.login.exceptions.UserNotFoundException;
-import com.sportify.user.UserPreferences;
-import com.sportify.user.UserPreferencesDAO;
 import com.sportify.user.UserDAO;
 import com.sportify.user.UserEntity;
+import com.sportify.user.UserPreferences;
+import com.sportify.user.UserPreferencesDAO;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.jasypt.salt.ZeroSaltGenerator;
 

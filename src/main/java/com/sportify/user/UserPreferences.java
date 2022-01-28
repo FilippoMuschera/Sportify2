@@ -1,8 +1,9 @@
 package com.sportify.user;
 
+import com.sportify.user.observer.Subject;
+
 import java.util.HashMap;
 import java.util.Map;
-import com.sportify.user.observer.Subject;
 
 public class UserPreferences extends Subject{
 

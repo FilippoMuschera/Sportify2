@@ -4,6 +4,7 @@ import com.sportify.login.LogInBean;
 import com.sportify.login.LogInController;
 import com.sportify.login.exceptions.LoginFailedException;
 import com.sportify.login.exceptions.UserNotFoundException;
+
 import java.util.Scanner;
 
 import static java.lang.System.*;

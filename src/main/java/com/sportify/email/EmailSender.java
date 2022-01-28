@@ -1,6 +1,7 @@
 package com.sportify.email;
 
 import com.sportify.user.UserEntity;
+
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;

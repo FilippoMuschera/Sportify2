@@ -4,7 +4,6 @@ import com.sportify.sportcenter.courts.*;
 import com.sportify.sportcenter.exceptions.SportCenterException;
 import com.sportify.user.UserEntity;
 
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

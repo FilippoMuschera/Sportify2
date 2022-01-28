@@ -2,10 +2,10 @@ package com.sportify.signup;
 
 import com.sportify.signup.exceptions.DifferentPasswordException;
 import com.sportify.signup.exceptions.UserAlreadyExistsException;
-import com.sportify.user.UserPreferences;
-import com.sportify.user.UserPreferencesDAO;
 import com.sportify.user.UserDAO;
 import com.sportify.user.UserEntity;
+import com.sportify.user.UserPreferences;
+import com.sportify.user.UserPreferencesDAO;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.jasypt.salt.ZeroSaltGenerator;
 

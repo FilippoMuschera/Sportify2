@@ -11,6 +11,7 @@ import com.sportify.sportcenter.courts.SportCourt;
 import com.sportify.sportcenter.courts.TimeSlot;
 import com.sportify.sportcenter.exceptions.SportCenterException;
 import com.sportify.user.UserEntity;
+
 import java.util.List;
 import java.util.Map;
 

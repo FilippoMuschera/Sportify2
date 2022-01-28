@@ -1,6 +1,7 @@
 package com.sportify.joinmatch;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ResultSetEntity {
 
@@ -10,11 +11,11 @@ public class ResultSetEntity {
         elementsList.add(r);
     }
 
-    public ArrayList<ResultElement> getElements() {
+    public List<ResultElement> getElements() {
         return this.elementsList;
     }
 
-    public void setElementsList(ArrayList<ResultElement> elementsList) {
-        this.elementsList = elementsList;
+    public void setElementsList(List<ResultElement> elementsList) {
+        this.elementsList = (ArrayList<ResultElement>) elementsList;
     }
 }

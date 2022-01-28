@@ -8,7 +8,6 @@ import javafx.animation.*;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
@@ -53,13 +52,10 @@ public class JoinMatchViewController {
     @FXML
     private Button infoButton;
 
-    private ResultSetEntity resultSet;
-
     private JoinMatchBean beanJoinMatch = new JoinMatchBean();
 
     private JoinMatchController joinMatchController = new JoinMatchController();
 
-    //TODO FONT DIMENSIONE LABEL SCHERMATA INIZIALE
 
     public void initialize(){
 
@@ -142,7 +138,7 @@ public class JoinMatchViewController {
             outcomeLabel.setOpacity(1);
             return;
         }
-        resultSet = beanJoinMatch.getResultSet();
+        ResultSetEntity resultSet = beanJoinMatch.getResultSet();
         scrollPaneJoinMatch.setVisible(true);
 
         CustomTilePane customTilePane = new CustomTilePane();
