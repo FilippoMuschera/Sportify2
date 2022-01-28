@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import java.lang.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
@@ -129,8 +128,8 @@
                 <Font size="24.0" />
             </font>
         </Label>
-        <Label fx:id="successLabel" layoutX="507.0" layoutY="66.0" style="-fx-text-fill: green;" text="Operation successfully completed!" />
-        <Label fx:id="errorLabel" layoutX="400.0" layoutY="300.0" prefHeight="100.0" prefWidth="500.0" text="There are no SportCenters in your area." textFill="RED" visible="false">
+        <Label fx:id="resultLabel" layoutX="507.0" layoutY="66.0" style="-fx-text-fill: green;" text="Operation successfully completed!" />
+        <Label fx:id="errorLabel" layoutX="435.0" layoutY="300.0" prefHeight="100.0" prefWidth="500.0" text="There are no SportCenters in your area." textFill="RED" visible="false">
             <font>
                 <Font size="36.0" />
             </font>

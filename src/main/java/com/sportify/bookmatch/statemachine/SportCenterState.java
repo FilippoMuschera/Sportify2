@@ -41,6 +41,7 @@ public class SportCenterState implements BMStateInterface {
                 nearSportCenters = GetSportCenterDAO.getInstance().getNearSportCenters(userSelectedSport, MAX_NUMBER_OF_RESULTS, lat, lng);
             }
             catch(SportCenterException exception2){
+                user.getPreferences().setRadiusOfInterest(currentDistance);
                 SportCenterException excp = new SportCenterException("il retry ha fallito, cambiare indirizzo");
                 throw excp;
             }

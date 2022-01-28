@@ -42,7 +42,7 @@ public class BookMatchViewController {
     @FXML
     private Button tennisButton;
     @FXML
-    private Label successLabel;
+    private Label resultLabel;
     @FXML
     private Label errorLabel;
 
@@ -56,11 +56,14 @@ public class BookMatchViewController {
 
     private BookMatchController bookMatchController = BookMatchController.getBookMatchControllerInstance();
     private CustomTilePane customTilePane = new CustomTilePane();
+    private List<SportCourt> courtsList;
+    private Map<String, Double> sportCenterList;
+    private String selectedSportCenter;
 
     @FXML
     public void initialize(){
 
-        successLabel.setOpacity(0);
+        resultLabel.setOpacity(0);
         UserEntity user = UserEntity.getInstance();
 
         int numOfSports = 0;
@@ -135,7 +138,7 @@ public class BookMatchViewController {
 
     private void startBookMatch(String selectedSport){
         this.hideButtons();
-        Map<String, Double> sportCenterList = null;
+
         try {
             sportCenterList = bookMatchController.startStateMachine(selectedSport);
             enableScrollPane();
@@ -150,48 +153,82 @@ public class BookMatchViewController {
         errorLabel.setVisible(true);
         errorLabel.setText("""
                     There are no Sport Centers in your area.
-                    Please change your address in Settings.""");
+                    Please change your address in "Settings".""");
+    }
+
+    private void deletedAllSC(){
+        hidePopUpControls();
+        hideButtons();
+        scrollPaneBookMatch.setVisible(false);
+        errorLabel.setVisible(true);
+        errorLabel.setText("""
+                All the Sport Centers in your area are full.
+                please increase your "Radius of Interest" in your
+                "Settings".""");
     }
 
     @FXML
     private void displaySportCenters(Map<String, Double> nearSportCenters) {
 
-        customTilePane.createCustomTilePane();
-        meanLabel.setVisible(true);
-        meanLabel.setText("These are the nearest Sport Center, choose one.");
+        if(nearSportCenters.size() == 0){
+            deletedAllSC();
+        }
+        else {
+            customTilePane.createCustomTilePane();
+            meanLabel.setVisible(true);
+            meanLabel.setText("These are the nearest Sport Center, choose one.");
 
-        nearSportCenters.forEach((key, value) -> {
-            Button selectButton = new Button(TEXT_BUTTON);
-            selectButton.setOnAction(event -> selectedSportCenter(key));
-            customTilePane.addElement(selectButton, "Sport Center " + key + "   (" + new DecimalFormat("##.##").format(nearSportCenters.get(key))+ " kms away)");
-        });
-        scrollPaneBookMatch.setContent(customTilePane.getCustomTP());
-
+            nearSportCenters.forEach((key, value) -> {
+                Button selectButton = new Button(TEXT_BUTTON);
+                selectButton.setOnAction(event -> selectedSportCenter(key));
+                customTilePane.addElement(selectButton, "Sport Center " + key + "   (" + new DecimalFormat("##.##").format(nearSportCenters.get(key)) + " kms away)");
+            });
+            scrollPaneBookMatch.setContent(customTilePane.getCustomTP());
+        }
     }
 
     private void selectedSportCenter(String sportCenterName){
-        List<SportCourt> courtsList = bookMatchController.selectedSportCenter(sportCenterName);
+        selectedSportCenter = sportCenterName;
+        courtsList = bookMatchController.selectedSportCenter(sportCenterName);
         this.displayCourts(courtsList);
     }
 
 
-    private void displayCourts(List<SportCourt> courtList){
+    private void displayCourts(List<SportCourt> courtList) throws SportCenterException{
 
-        customTilePane.createCustomTilePane();
-        meanLabel.setText("Select which court you want.");
-
-        for(SportCourt element:courtList) {
-            Button selectButton = new Button(TEXT_BUTTON);
-            selectButton.setOnAction(event->selectedCourt(String.valueOf(element.getCourtID())));
-            customTilePane.addElement(selectButton,"Court number: "+element.getCourtID());
+        if(courtList.size() == 0){
+            sportCenterList.remove(selectedSportCenter);
+            deletedSportCenter();
+            displaySportCenters(sportCenterList);
         }
-        scrollPaneBookMatch.setContent(customTilePane.getCustomTP());
+        else {
+            customTilePane.createCustomTilePane();
+            meanLabel.setText("Select which court you want.");
 
+            for (SportCourt element : courtList) {
+                Button selectButton = new Button(TEXT_BUTTON);
+                selectButton.setOnAction(event -> selectedCourt(String.valueOf(element.getCourtID())));
+                customTilePane.addElement(selectButton, "Court number: " + element.getCourtID());
+            }
+            scrollPaneBookMatch.setContent(customTilePane.getCustomTP());
+        }
     }
 
     private void selectedCourt(String id){
-        List<TimeSlot> timeTable = bookMatchController.selectedCourt(id);
-        this.displayHourSlots(timeTable);
+        try {
+            List<TimeSlot> timeTable = bookMatchController.selectedCourt(id);
+            this.displayHourSlots(timeTable);
+        }
+        catch(SportCenterException exception){
+            for(SportCourt s: courtsList){
+                if(s.getCourtID() == Integer.parseInt(id)){
+                    courtsList.remove(s);
+                    deletedCourt();
+                    break;
+                }
+            }
+            displayCourts(courtsList);
+        }
     }
 
     private void displayHourSlots(List<TimeSlot> timeTable){
@@ -238,19 +275,21 @@ public class BookMatchViewController {
 
         hidePopUpControls();
         enableButtons();
-        displaySuccessLabel();
+        resultLabel.setText("Operation successfully completed!");
+        resultLabel.setStyle("-fx-text-fill: rgba(0,255,0,1);");
+        displayResultLabel(resultLabel);
     }
 
-    private void displaySuccessLabel(){
+    private void displayResultLabel(Label label){
 
-        Timeline blinker = createBlinker(successLabel);
-        FadeTransition fader = createFader(successLabel);
+        Timeline blinker = createBlinker(label);
+        FadeTransition fader = createFader(label);
         SequentialTransition blinkThenFade = new SequentialTransition(
-                successLabel,
+                label,
                 blinker,
                 fader
         );
-        fader.setOnFinished(event -> successLabel.setVisible(false));
+        fader.setOnFinished(event -> label.setVisible(false));
         blinkThenFade.play();
     }
 
@@ -268,6 +307,18 @@ public class BookMatchViewController {
         fade.setToValue(0);
 
         return fade;
+    }
+
+    private void deletedSportCenter(){
+        resultLabel.setText("The Sport Center you selected is full");
+        resultLabel.setStyle("-fx-text-fill: rgba(255,0,0,1);");
+        displayResultLabel(resultLabel);
+    }
+
+    private void deletedCourt(){
+        resultLabel.setText("The Court you selected is full");
+        resultLabel.setStyle("-fx-text-fill: rgba(255,0,0,1);");
+        displayResultLabel(resultLabel);
     }
 
     private void showPopUpControls(){

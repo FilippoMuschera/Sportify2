@@ -26,15 +26,15 @@ public class BookMatchController {
     private String selectedSportCenter;
     private Map<String, Double> nearSportCenters;
 
-    private static BookMatchController singleBookMatchControllerInstance = null;
+    private static com.sportify.bookmatch.BookMatchController singleBookMatchControllerInstance = null;
 
     protected BookMatchController(){}
 
-    public static BookMatchController getBookMatchControllerInstance(){
-        if (BookMatchController.singleBookMatchControllerInstance == null){
-            BookMatchController.singleBookMatchControllerInstance = new BookMatchController();
+    public static com.sportify.bookmatch.BookMatchController getBookMatchControllerInstance(){
+        if (com.sportify.bookmatch.BookMatchController.singleBookMatchControllerInstance == null){
+            com.sportify.bookmatch.BookMatchController.singleBookMatchControllerInstance = new com.sportify.bookmatch.BookMatchController();
         }
-        return BookMatchController.singleBookMatchControllerInstance;
+        return com.sportify.bookmatch.BookMatchController.singleBookMatchControllerInstance;
     }
 
 
@@ -53,7 +53,7 @@ public class BookMatchController {
         return courtList;
     }
 
-    public List<TimeSlot> selectedCourt(String courtID){
+    public List<TimeSlot> selectedCourt(String courtID) throws SportCenterException{
 
         this.timeTable = courtList.get(selectedCourtID).getBookingTable();
 
