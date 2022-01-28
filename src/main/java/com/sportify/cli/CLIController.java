@@ -39,4 +39,9 @@ public class CLIController {
         BookMatchCLI bookMatchCLI = new BookMatchCLI();
         bookMatchCLI.startBookMatch();
     }
+
+    public void showJoinMatch() {
+        JoinMatchCLI joinMatchCLI = new JoinMatchCLI();
+        joinMatchCLI.showJoinMatchCLI();
+    }
 }

@@ -50,6 +50,12 @@ public class HomeScreenCLI {
                 break;
             }
 
+            case 4 :{
+                CLIController c = CLIController.getIstance();
+                c.showJoinMatch();
+                break;
+            }
+
             case 5: {
                 showFaq();
                 break;

@@ -178,6 +178,7 @@ public class JoinMatchViewController {
         distanceToggle.setVisible(false);
         spotsToggle.setVisible(false);
         infoButton.setVisible(false);
+        outcomeLabel.setVisible(false);
     }
     
     private void showControls(){

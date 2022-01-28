@@ -46,7 +46,7 @@ public class JoinMatchBean {
 
     }
 
-    public void setMaxResults(String maxResultsString) {
+    public void setMaxResults(String maxResultsString) throws IllegalArgumentException {
         if (maxResultsString.isEmpty())
             throw new IllegalArgumentException("Max results number cannot be empty!");
         int max;
