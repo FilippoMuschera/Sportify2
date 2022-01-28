@@ -3,6 +3,7 @@ package com.sportify.cli;
 import com.sportify.bookmatch.BookMatchController;
 import com.sportify.sportcenter.courts.SportCourt;
 import com.sportify.sportcenter.courts.TimeSlot;
+import com.sportify.sportcenter.exceptions.SportCenterException;
 import com.sportify.user.UserEntity;
 import com.sportify.user.UserPreferences;
 
@@ -19,7 +20,12 @@ public class BookMatchCLI {
     private BookMatchController bookMatchController = BookMatchController.getBookMatchControllerInstance();
     private UserPreferences userPreferences =  UserEntity.getInstance().getPreferences();
     private static final String ERROR_MESSAGE = "Invalid option, try again.";
+    private List<SportCourt> courtsList;
+    private Map<String, Double> sportCenters;
+    private String selectedSportCenter;
 
+
+    //inizio della BookMatch, chiedo all'utente quale sport desidera
     public void startBookMatch(){
         int selectedSport;
         while ((selectedSport = showSports()) < 0) {
@@ -32,7 +38,7 @@ public class BookMatchCLI {
                     CLIController c = CLIController.getIstance();
                     c.showSettings();
                 }
-                selectSportCenter("Basket");
+                getSportCenters("Basket");
                 break;
             case 2:
                 if(!userPreferences.getFootball()){
@@ -40,7 +46,7 @@ public class BookMatchCLI {
                     CLIController c = CLIController.getIstance();
                     c.showSettings();
                 }
-                selectSportCenter("Football");
+                getSportCenters("Football");
                 break;
             case 3:
                 if(!userPreferences.getPadel()){
@@ -48,7 +54,7 @@ public class BookMatchCLI {
                     CLIController c = CLIController.getIstance();
                     c.showSettings();
                 }
-                selectSportCenter("Padel");
+                getSportCenters("Padel");
                 break;
             case 4:
                 if(!userPreferences.getTennis()){
@@ -57,7 +63,7 @@ public class BookMatchCLI {
                     c.showSettings();
                 }
 
-                selectSportCenter("Tennis");
+                getSportCenters("Tennis");
                 break;
             case 5:
                 System.exit(0);
@@ -67,6 +73,7 @@ public class BookMatchCLI {
 
     }
 
+    //metodo che permette la selezione lo sport
     private int showSports() {
         out.println("""
                                         
@@ -88,30 +95,56 @@ public class BookMatchCLI {
         return selectedOption;
     }
 
-    private void selectSportCenter(String sportName){
-        Map<String, Double> sportCenters = bookMatchController.startStateMachine(sportName);
-        int selectedSportCenterIndex;
-        String selectedSportCenter = "";
-        while((selectedSportCenterIndex = showSportCenters(sportCenters)) < 0){
-            //aspetto input corretto
+
+    //metodo che recupera i sport centers dello sport selezionato
+    private void getSportCenters(String sportName){
+        try {
+            sportCenters = bookMatchController.startStateMachine(sportName);
+            selectSportCenter();
         }
-        int i = 1;
-        for (Iterator<String> iterator = sportCenters.keySet().iterator(); iterator.hasNext(); ) {
-            String key = iterator.next();
-            if(i == selectedSportCenterIndex){
-                selectedSportCenter = key;
-            }
-            i++;
+        catch(SportCenterException e){
+            err.println("""
+                    
+                    There are no Sport Centers in your area.
+                    Please change your address in "Settings".""");
         }
-        selectCourt(selectedSportCenter);
     }
 
+
+    //metodo che riceve lo sport center selezionato e recupera i courts
+    private void selectSportCenter(){
+        if(sportCenters.isEmpty()){
+            err.println("""
+                    The Sport Centers in your area are full.
+                    Please change your address.""");
+        }
+        else {
+            int selectedSportCenterIndex;
+
+            while ((selectedSportCenterIndex = showSportCenters(sportCenters)) < 0) {
+                //aspetto input corretto
+            }
+            int i = 1;
+            for (Iterator<String> iterator = sportCenters.keySet().iterator(); iterator.hasNext(); ) {
+                String key = iterator.next();
+                if (i == selectedSportCenterIndex) {
+                    selectedSportCenter = key;
+                }
+                i++;
+            }
+            courtsList = bookMatchController.selectedSportCenter(selectedSportCenter);
+            selectCourt();
+        }
+    }
+
+
+    //metodo che permette la selezione dello sport center
     private int showSportCenters(Map<String,Double> sportCenters){
         out.println("""
                 
                 
-                """);
-        out.println("Select the sport center you interested in. (Please insert a number)");
+                
+                Select the sport center you interested in. (Please insert a number)""");
         int i = 1;
         for (Iterator<String> iterator = sportCenters.keySet().iterator(); iterator.hasNext(); ) {
             String key = iterator.next();
@@ -128,24 +161,39 @@ public class BookMatchCLI {
         return selectedOption;
     }
 
-    private void selectCourt(String selectedSportCenter){
-        List<SportCourt> courtsList = bookMatchController.selectedSportCenter(selectedSportCenter);
-        int selectedCourtIndex;
-        while((selectedCourtIndex = showCourts(courtsList)) < 0){
-            //aspetto input corretto
+    private void selectCourt(){
+        if(courtsList.isEmpty()){
+            for (Iterator<String> iterator = sportCenters.keySet().iterator(); iterator.hasNext(); ) {
+                String key = iterator.next();
+                if(key == selectedSportCenter){
+                    sportCenters.remove(key);
+                    break;
+                }
+            }
+
+            err.println("""
+                    
+                    The Sport Center you selected is full.
+                    Please choose another one.""");
+            selectSportCenter();
         }
-        selectedCourtIndex--;
-        selectTimeSlot(selectedCourtIndex);
+        else {
+            int selectedCourtIndex;
+            while ((selectedCourtIndex = showCourts(courtsList)) < 0) {
+                //aspetto input corretto
+            }
+            selectedCourtIndex--;
+            selectTimeSlot(selectedCourtIndex);
+        }
     }
 
-    private int showCourts(List<SportCourt> courtsList){
+    private int showCourts(List<SportCourt> list){
         int i = 1;
         out.println("""
-                
-                
-                """);
-        out.println("Select the court you want (Please insert a number):");
-        for(SportCourt s: courtsList){
+        
+        
+        Select the court you want (Please insert a number):""");
+        for(SportCourt s: list){
             out.println(i+". Court number: "+s.getCourtID());
             i++;
         }
@@ -160,7 +208,24 @@ public class BookMatchCLI {
     }
 
     private void selectTimeSlot(int selectedCourtIndex){
-        List<TimeSlot> timeTable = bookMatchController.selectedCourt(String.valueOf(selectedCourtIndex));
+        List<TimeSlot> timeTable = null;
+        try {
+            timeTable = bookMatchController.selectedCourt(String.valueOf(selectedCourtIndex));
+        }
+        catch(SportCenterException e){
+            for(SportCourt s: courtsList){
+                if(s.getCourtID() == selectedCourtIndex){
+                    courtsList.remove(s);
+                    break;
+                }
+            }
+            err.println("""
+                    
+                    
+                    The Court you selected is full.
+                    Please select another one.""");
+            selectCourt();
+        }
         int selectedTimeSlotIndex;
         while ((selectedTimeSlotIndex = showTimeTable(timeTable)) < 0){
             //aspetto input corretto
@@ -179,10 +244,9 @@ public class BookMatchCLI {
     private int showTimeTable(List<TimeSlot> timeTable){
         int i = 1;
         out.println("""
-                
-                
-                """);
-        out.println("Select the time slot you prefer (please insert a number):");
+        
+        
+        Select the time slot you prefer (please insert a number):""");
         for(TimeSlot t: timeTable){
             int start = t.getStartTime().getHour();
             int finish = t.getEndTime().getHour();
