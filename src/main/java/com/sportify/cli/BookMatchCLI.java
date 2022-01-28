@@ -161,6 +161,8 @@ public class BookMatchCLI {
         return selectedOption;
     }
 
+
+    //metodo che riceve il campo selezionato e recupera i timeslot
     private void selectCourt(){
         if(courtsList.isEmpty()){
             for (Iterator<String> iterator = sportCenters.keySet().iterator(); iterator.hasNext(); ) {
@@ -183,10 +185,30 @@ public class BookMatchCLI {
                 //aspetto input corretto
             }
             selectedCourtIndex--;
-            selectTimeSlot(selectedCourtIndex);
+            List<TimeSlot> timeTable = null;
+            try {
+                timeTable = bookMatchController.selectedCourt(String.valueOf(selectedCourtIndex));
+            }
+            catch(SportCenterException e){
+                for(SportCourt s: courtsList){
+                    if(s.getCourtID() == selectedCourtIndex){
+                        courtsList.remove(s);
+                        break;
+                    }
+                }
+                err.println("""
+                    
+                    
+                    The Court you selected is full.
+                    Please select another one.""");
+                selectCourt();
+            }
+            selectTimeSlot(timeTable);
         }
     }
 
+
+    //metodo che permette la selezione del campo
     private int showCourts(List<SportCourt> list){
         int i = 1;
         out.println("""
@@ -207,25 +229,10 @@ public class BookMatchCLI {
         return selectedOption;
     }
 
-    private void selectTimeSlot(int selectedCourtIndex){
-        List<TimeSlot> timeTable = null;
-        try {
-            timeTable = bookMatchController.selectedCourt(String.valueOf(selectedCourtIndex));
-        }
-        catch(SportCenterException e){
-            for(SportCourt s: courtsList){
-                if(s.getCourtID() == selectedCourtIndex){
-                    courtsList.remove(s);
-                    break;
-                }
-            }
-            err.println("""
-                    
-                    
-                    The Court you selected is full.
-                    Please select another one.""");
-            selectCourt();
-        }
+
+    //metodo che riceve il timeslot selezionato e avvia la prenotazione
+    private void selectTimeSlot(List<TimeSlot> timeTable){
+
         int selectedTimeSlotIndex;
         while ((selectedTimeSlotIndex = showTimeTable(timeTable)) < 0){
             //aspetto input corretto
@@ -241,6 +248,8 @@ public class BookMatchCLI {
         selectOperation(selectedTimeSlot);
     }
 
+
+    //metodo che permette la selezione del timeslot
     private int showTimeTable(List<TimeSlot> timeTable){
         int i = 1;
         out.println("""
