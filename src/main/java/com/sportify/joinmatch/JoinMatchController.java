@@ -8,6 +8,7 @@ import com.sportify.sportcenter.SportCenterEntity;
 import com.sportify.sportcenter.SportCenterInfo;
 import com.sportify.sportcenter.courts.SportCourt;
 import com.sportify.sportcenter.courts.TimeSlot;
+import com.sportify.sportcenter.exceptions.SportCenterException;
 import com.sportify.user.UserEntity;
 import com.sportify.user.UserPreferences;
 
@@ -19,13 +20,15 @@ import java.util.Map;
 
 public class JoinMatchController {
 
-    private ResultSetEntity resultSet = new ResultSetEntity();
+    private ResultSetEntity resultSet;
     private boolean isDistanceImportant;
     private boolean isAvailableSpotsImportant;
 
 
-    public void findJoinableMatch(JoinMatchBean bean) {
-        int maxSportCenter = 20;
+    public void findJoinableMatch(JoinMatchBean bean) throws SportCenterException{
+
+        int maxSportCenter = 20; //valore arbitrario per la ricerca degli sport center
+        resultSet = new ResultSetEntity();
 
         //Settiamo gli attributi per ponderare il peso di distanza e posti disponibili
         this.isDistanceImportant = bean.isDistanceIsImportant();
@@ -37,10 +40,38 @@ public class JoinMatchController {
         UserPreferences preferences = UserEntity.getInstance().getPreferences();
 
         //Uso la getNearSportCenter per trovare (al più) bean.getMaxResults() campi sportivi nel raggio selezionato dall'utente
-        Map<String, Double> sportCenterMap = getSportCenterDAO.getNearSportCenters(bean.getSelectedSport(), maxSportCenter,
-                g.getLat(preferences.getUserAddress()), g.getLng(preferences.getUserAddress()));
+        Map<String, Double> sportCenterMap = null;
+        try {
+             sportCenterMap = getSportCenterDAO.getNearSportCenters(bean.getSelectedSport(), maxSportCenter,
+                    g.getLat(preferences.getUserAddress()), g.getLng(preferences.getUserAddress()));
+        } catch (SportCenterException e){
 
-        //TODO ECCEZIONE NON TROVO CENTRI SPORTIVI
+
+            // Se non sono stati trovati i campi, proviamo a ripetere la ricerca con un raggio (temporaneamente) più ampio
+            UserPreferences p = UserEntity.getInstance().getPreferences();
+            int userRadius = p.getSortingDistance();
+            int temporaryRadius = 25;
+            p.setRadiusOfInterest(temporaryRadius);
+
+            //Ora proviamo a ripetere la ricerca
+            try {
+                sportCenterMap = getSportCenterDAO.getNearSportCenters(bean.getSelectedSport(), maxSportCenter,
+                        g.getLat(preferences.getUserAddress()), g.getLng(preferences.getUserAddress()));
+
+                //Se la ricerca questa volta va a buon fine, reimpostiamo le opzioni dell'utente e procediamo con lo
+                //use case
+
+                p.setRadiusOfInterest(userRadius);
+
+            } catch (SportCenterException ex){
+                //Se anche questa volta non è stato possibile trovare dei centri sportivi non possiamo fare altro che
+                //restituire un errore all'utente (che verrà quindi gestito dalla view dello use case)
+                p.setRadiusOfInterest(userRadius);
+                throw new SportCenterException("Impossibile trovare campo anche con raggio maggiorato");
+            }
+
+        }
+
 
         //Per ogni sport center che abbiamo trovato andiamo a caricare i campi relativi allo sport scelto dall'utente
         for (Map.Entry<String, Double> entry : sportCenterMap.entrySet()){
@@ -73,19 +104,25 @@ public class JoinMatchController {
         }
         //A questo punto il nostro ResultSetEntity aggrega tutti i ResultElement che ci servono, ora bisogna ordinarli
         //in base al loro indexValue
-        //TODO CASO CON 0 RISULTATI
         this.evaluateIndexValues();
         int min = Math.min(this.resultSet.getElements().size(), bean.getMaxResults());
-        System.out.println(bean.getMaxResults());
+
+        //TODO CASO LISTA VUOTA
+        this.shrinkResult(min);
+
+
+        bean.setResultSet(this.resultSet);
+
+
+    }
+
+    private void shrinkResult(int min){
         ArrayList<ResultElement> shrunkList = new ArrayList<>();
 
         for (int i = 0; i< min; i++){
             shrunkList.add(this.resultSet.getElements().get(i));
         }
-
         resultSet.setElementsList(shrunkList);
-        bean.setResultSet(this.resultSet);
-
 
     }
 

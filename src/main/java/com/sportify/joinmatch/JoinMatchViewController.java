@@ -1,12 +1,14 @@
 package com.sportify.joinmatch;
 
 import com.sportify.bookmatch.CustomTilePane;
+import com.sportify.sportcenter.exceptions.SportCenterException;
 import com.sportify.user.UserEntity;
 import com.sportify.utilitiesui.UIController;
 import javafx.animation.*;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
@@ -16,6 +18,8 @@ import java.text.DecimalFormat;
 
 public class JoinMatchViewController {
 
+    @FXML
+    private Label explainLabel;
     @FXML
     private ToggleButton basketToggleButton;
     @FXML
@@ -46,6 +50,8 @@ public class JoinMatchViewController {
     private ScrollPane scrollPaneJoinMatch;
     @FXML
     private Label outcomeLabel;
+    @FXML
+    private Button infoButton;
 
     private ResultSetEntity resultSet;
 
@@ -58,6 +64,7 @@ public class JoinMatchViewController {
     public void initialize(){
 
         outcomeLabel.setOpacity(0);
+        explainLabel.setOpacity(0);
 
         UserEntity user = UserEntity.getInstance();
 
@@ -120,7 +127,21 @@ public class JoinMatchViewController {
             return;
 
         }
-        joinMatchController.findJoinableMatch(beanJoinMatch);
+        try {
+            joinMatchController.findJoinableMatch(beanJoinMatch);
+        } catch (SportCenterException e){
+            scrollPaneJoinMatch.setVisible(false);
+            this.hideControls();
+            this.initialize();
+            this.showControls();
+            outcomeLabel.setText("""
+               Unfortunately, we couldn't find any joinable match in your area.
+                    Please change your address in Settings and try again.
+                    """);
+            outcomeLabel.setTextFill(Color.RED);
+            outcomeLabel.setOpacity(1);
+            return;
+        }
         resultSet = beanJoinMatch.getResultSet();
         scrollPaneJoinMatch.setVisible(true);
 
@@ -160,6 +181,7 @@ public class JoinMatchViewController {
         hourTextField.setVisible(false);
         distanceToggle.setVisible(false);
         spotsToggle.setVisible(false);
+        infoButton.setVisible(false);
     }
     
     private void showControls(){
@@ -172,6 +194,7 @@ public class JoinMatchViewController {
         hourTextField.setVisible(true);
         distanceToggle.setVisible(true);
         spotsToggle.setVisible(true);
+        infoButton.setVisible(true);
     }
 
     private void selectedMatch(ResultElement selectedMatch){
@@ -237,4 +260,11 @@ public class JoinMatchViewController {
     }
 
 
+    public void showInfo() {
+        explainLabel.setOpacity(1);
+    }
+
+    public void hideInfo() {
+        explainLabel.setOpacity(0);
+    }
 }
