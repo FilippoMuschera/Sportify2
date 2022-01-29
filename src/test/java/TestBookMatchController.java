@@ -85,6 +85,7 @@ class TestBookMatchController {
     void testSelectedCourt(){
         createTestSCEntity();
 
+        bookMatchController.setCourtList(testCourtList);
         List<TimeSlot> resultTimeTable = bookMatchController.selectedCourt(""+testIdCourt);
         deleteTestSCEntity();
 
@@ -100,22 +101,14 @@ class TestBookMatchController {
         bookMatchController.bookMatch();
 
         SportCenterCourts resultCourts = GetSportCenterDAO.getInstance().getSportCenter(testSportCenterName,testSport).getCourts();
-        List<SportCourt> resultCourtList = null;
+        List<SportCourt> resultCourtList = switch (testSport) {
+            case "Basket" -> resultCourts.getBasketCourts();
+            case "Football" -> resultCourts.getFootballFields();
+            case "Padel" -> resultCourts.getPadelCourts();
+            case "Tennis" -> resultCourts.getTennisCourts();
+            default -> null;
+        };
 
-        switch(testSport){
-            case "Basket":
-                resultCourtList = resultCourts.getBasketCourts();
-                break;
-            case "Football":
-                resultCourtList = resultCourts.getFootballFields();
-                break;
-            case "Padel":
-                resultCourtList = resultCourts.getPadelCourts();
-                break;
-            case "Tennis":
-                resultCourtList = resultCourts.getTennisCourts();
-                break;
-        }
         int resultSpotsLeft = resultCourtList.get(0).getBookingTable().get(0).getAvailableSpots();
         deleteTestSCEntity();
 
