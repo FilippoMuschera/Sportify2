@@ -138,4 +138,23 @@ public class AddSportCenterDAO {
         }
 
     }
+
+    public void rollbackSC(SportCenterEntity sportCenter) { //Elimina lo SC e tutti i campi/timeslot/infoPosizione dal DB
+        try (Connection con = getConnector()) {
+            if (con == null)
+                throw new SQLException();
+            //DELETE ON CASCADE attivo, quindi basta eliminare lo SC da questa tabella
+            String query = "DELETE FROM `sportify_db`.`SportCenter` WHERE (`Name` = ?);";
+            try (PreparedStatement ps = con.prepareStatement(query)) {
+                ps.setString(1, sportCenter.getInfo().getSportCenterName());
+
+
+                ps.executeUpdate();
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

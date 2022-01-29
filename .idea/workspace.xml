@@ -66,7 +66,7 @@
       <recent name="com.sportify.login" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.StartCLI">
+  <component name="RunManager" selected="Application.StartUI">
     <configuration name="StartCLI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.sportify.cli.StartCLI" />
       <module name="SportifyUI" />
@@ -146,8 +146,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.StartCLI" />
         <item itemvalue="Application.StartUI" />
+        <item itemvalue="Application.StartCLI" />
         <item itemvalue="JUnit.TestGeolocator.testTime" />
         <item itemvalue="JUnit.TestGetSportCenterDAO.testGetNearSportCenter" />
         <item itemvalue="JUnit.TestGeolocator.testGetCoordinates" />
@@ -210,7 +210,7 @@
       <workItem from="1643311824899" duration="803000" />
       <workItem from="1643359964631" duration="22771000" />
       <workItem from="1643392720517" duration="6152000" />
-      <workItem from="1643450129633" duration="1380000" />
+      <workItem from="1643450129633" duration="4103000" />
     </task>
     <servers />
   </component>

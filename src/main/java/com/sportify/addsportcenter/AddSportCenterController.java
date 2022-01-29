@@ -44,7 +44,21 @@ public class AddSportCenterController {
 
 
         AddSportCenterDAO dao = new AddSportCenterDAO();
-        dao.addSCToDB(sportCenter);
+        try {
+            dao.addSCToDB(sportCenter);
+
+        } catch (SportCenterException e){
+            /* Se una delle query per aggiungere lo sport center al DB non va a buon fine, bisogna essere sicuri che non
+            * rimanga traccia dello sport center sul database: sarebbe infatti scorretto lo scenario in cui l'aggiunta delle info
+            * dello sport center sia andata a buon fine, ma fallisca l'aggiunta dei campi o dei timeslot, perchè l'aggiunta
+            * dello sport center sarebbe incompleta. In questo caso quindi, dobbiamo eliminare tutte le possibili tracce dello sport center
+            * dal database. Per farlo abbiamo bisogno di eliminare lo sport center dalla tabella delle informazioni dello sport center.
+            * Tutte le altre tabelle (riguardanti lo sport center) hanno infatti una foreign key verso questa tabella, impostata con
+            * "ON DELETE CASCADE". Eliminando dunque lo Sport Center da questa tabella, a cascata verranno eliminate anche le informazioni sui campi
+            * e/o time slot dalle altre tabelle.*/
+            dao.rollbackSC(sportCenter);
+            throw new SportCenterException("Unable to add the Sport Center"); //rilancio l'eccezione per la View
+        }
 
     }
 

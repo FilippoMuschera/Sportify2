@@ -42,6 +42,8 @@ public class SignUpView {
                 bean.setOwner(isOwnerCheckBox.isSelected());
                 SignUpController controller = new SignUpController();
                 controller.signUpUser(bean);
+                UIController.getUIControllerInstance().showSettings();
+
 
             } catch (DifferentPasswordException e) {
                 statusLabel.setText("Passwords are not the same, check them and try again");
@@ -53,7 +55,6 @@ public class SignUpView {
                 statusLabel.setOpacity(1);
             }
 
-        UIController.getUIControllerInstance().showSettings();
 
     }
 

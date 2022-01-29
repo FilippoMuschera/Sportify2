@@ -2,10 +2,6 @@
 q
 Asrc/main/java/com/sportify/addsportcenter/AddSportCenterBean.java,7\8\7893631a6620f0c368281d04a8342081745ad675
 w
-Gsrc/main/java/com/sportify/addsportcenter/AddSportCenterController.java,7\0\70ac34aced6e2acad8e699bc846d62c556ea2aa7
-q
-Asrc/main/java/com/sportify/addsportcenter/AddSportCenterView.java,a\5\a54063e12082bf0f6a53e2962313415542e3b102
-w
 Gsrc/main/java/com/sportify/bookmatch/statemachine/BMStateInterface.java,4\0\406973d3fc1064c2b274a41e66e13b1f12cdfcb3
 ƒ
 Ssrc/main/java/com/sportify/bookmatch/statemachine/BMStateMachineImplementation.java,4\0\40b8b5e925284caa8b5b1ceea7c384be46d38605
@@ -59,10 +55,6 @@ Lsrc/main/java/com/sportify/signup/exceptions/DifferentPasswordException.java,f
 Lsrc/main/java/com/sportify/signup/exceptions/UserAlreadyExistsException.java,e\b\ebaca43461f4398467c66c9062a642abed32f40f
 a
 1src/main/java/com/sportify/signup/SignUpBean.java,1\d\1de0f63d9d5348ff45babced4727396df336a624
-g
-7src/main/java/com/sportify/signup/SignUpController.java,6\7\6762e6a2dd7f0bffddc562aca35da3a0498ea7a5
-a
-1src/main/java/com/sportify/signup/SignUpView.java,9\6\963a71d02373276ed0fff40198adc42369d9a0c3
 n
 >src/main/java/com/sportify/sportcenter/courts/BasketCourt.java,9\c\9c8e66f7005581d95e63eef3585d98547aa1789f
 p
@@ -77,8 +69,6 @@ k
 ;src/main/java/com/sportify/sportcenter/courts/TimeSlot.java,f\9\f9e22cc495d582de4138f67bbcbd034b78b9eb90
 {
 Ksrc/main/java/com/sportify/sportcenter/exceptions/SportCenterException.java,6\c\6c5ccfd9a3259550353271b801b6d3432ffffc09
-m
-=src/main/java/com/sportify/sportcenter/AddSportCenterDAO.java,0\6\0697f9d88f0f9ce30e3283d97e982afc9e9d6cb0
 m
 =src/main/java/com/sportify/sportcenter/GetSportCenterDAO.java,9\f\9f8d9476ab81e5cdb2ec773d70d16cf998335dda
 m
@@ -99,8 +89,6 @@ _
 /src/main/java/com/sportify/user/UserEntity.java,c\a\cae413220997e69e40bfdbaceb2941b5280c4247
 d
 4src/main/java/com/sportify/user/UserPreferences.java,9\f\9f1c11bb05a5059b87f9a67886d38a34d72ddeee
-g
-7src/main/java/com/sportify/user/UserPreferencesDAO.java,a\4\a44f114f0d856114d6f9e31be4818b4c311260ba
 i
 9src/main/java/com/sportify/utilitiesui/FaqController.java,1\1\11a8df9b1c6f6c97055116142a6b97b802aa14d2
 j
@@ -109,13 +97,9 @@ c
 3src/main/java/com/sportify/utilitiesui/StartUI.java,5\e\5e273300312a9b198adeab4e1756ece61b8870e3
 h
 8src/main/java/com/sportify/utilitiesui/UIController.java,6\4\646ff5f6d24cfd68c8a744ea860f1dc16c12396c
-e
-5src/main/java/com/sportify/utilitydb/DBConnector.java,c\c\cced02002006009047ca8ee7710c7758bea7625b
 a
 1src/main/java/com/sportify/cli/CLIController.java,6\2\622253e3593f3b1e1ed496743e125b5b0fcdfc30
 q
 Asrc/main/java/com/sportify/joinmatch/JoinMatchViewController.java,1\4\14e91f0c79d08bf872776894accb1944a659d5b1
 m
 =src/main/java/com/sportify/joinmatch/JoinMatchController.java,a\c\ac9946baed03f990e58814295515e75490f0fd85
-e
-5src/main/java/com/sportify/cli/AddSportCenterCLI.java,b\8\b8742fae8c643985c0f98ce3654d13911772faa2
