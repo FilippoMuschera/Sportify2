@@ -3,6 +3,7 @@ package com.sportify.joinmatch;
 import com.sportify.bookmatch.CustomTilePane;
 import com.sportify.sportcenter.exceptions.SportCenterException;
 import com.sportify.user.UserEntity;
+import com.sportify.utilitiesui.DisappearingLabel;
 import com.sportify.utilitiesui.UIController;
 import javafx.animation.*;
 import javafx.fxml.FXML;
@@ -207,34 +208,14 @@ public class JoinMatchViewController {
         this.showControls();
         outcomeLabel.setText("Match joined successfully!");
         outcomeLabel.setTextFill(Color.GREEN);
-        Timeline blinker = createBlinker(outcomeLabel);
-        FadeTransition fader = createFader(outcomeLabel);
-        SequentialTransition blinkThenFade = new SequentialTransition(
-                outcomeLabel,
-                blinker,
-                fader
-        );
-        fader.setOnFinished(event -> outcomeLabel.setVisible(false));
+
+        SequentialTransition blinkThenFade = DisappearingLabel.createTransition(outcomeLabel);
+
         blinkThenFade.play();
         
         //label success
     }
 
-    private Timeline createBlinker(Node node) {
-        Timeline blink = new Timeline(
-                new KeyFrame(Duration.seconds(2), new KeyValue(node.visibleProperty(), true, Interpolator.DISCRETE)));
-        blink.setCycleCount(1);
-
-        return blink;
-    }
-
-    private FadeTransition createFader(Node node) {
-        FadeTransition fade = new FadeTransition(Duration.seconds(0.5), node);
-        fade.setFromValue(1);
-        fade.setToValue(0);
-
-        return fade;
-    }
 
     public void showSettings() throws IOException {
         UIController c = UIController.getUIControllerInstance();

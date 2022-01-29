@@ -4,6 +4,7 @@ import com.sportify.sportcenter.courts.SportCourt;
 import com.sportify.sportcenter.courts.TimeSlot;
 import com.sportify.sportcenter.exceptions.SportCenterException;
 import com.sportify.user.UserEntity;
+import com.sportify.utilitiesui.DisappearingLabel;
 import com.sportify.utilitiesui.UIController;
 import javafx.animation.*;
 import javafx.fxml.FXML;
@@ -284,32 +285,11 @@ public class BookMatchViewController {
 
     private void displayResultLabel(Label label){
 
-        Timeline blinker = createBlinker(label);
-        FadeTransition fader = createFader(label);
-        SequentialTransition blinkThenFade = new SequentialTransition(
-                label,
-                blinker,
-                fader
-        );
-        fader.setOnFinished(event -> label.setVisible(false));
+        SequentialTransition blinkThenFade = DisappearingLabel.createTransition(label);
+
         blinkThenFade.play();
     }
 
-    private Timeline createBlinker(Node node) {
-        Timeline blink = new Timeline(
-                new KeyFrame(Duration.seconds(2), new KeyValue(node.visibleProperty(), true, Interpolator.DISCRETE)));
-        blink.setCycleCount(1);
-
-        return blink;
-    }
-
-    private FadeTransition createFader(Node node) {
-        FadeTransition fade = new FadeTransition(Duration.seconds(0.5), node);
-        fade.setFromValue(1);
-        fade.setToValue(0);
-
-        return fade;
-    }
 
     private void deletedSportCenter(){
         resultLabel.setText("The Sport Center you selected is full");
