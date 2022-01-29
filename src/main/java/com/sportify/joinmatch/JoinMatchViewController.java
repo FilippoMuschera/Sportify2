@@ -55,6 +55,11 @@ public class JoinMatchViewController {
 
     private JoinMatchController joinMatchController = new JoinMatchController();
 
+    private boolean hasFootball = false;
+    private boolean hasPadel = false;
+    private boolean hasBasket = false;
+    private boolean hasTennis = false;
+
 
     public void initialize(){
 
@@ -72,6 +77,7 @@ public class JoinMatchViewController {
             basketToggleButton.setLayoutX(position);
             basketToggleButton.setVisible(true);
             basketToggleButton.setOnAction(event->beanJoinMatch.setSelectedSport("Basket"));
+            this.hasBasket = true;
 
         }
 
@@ -82,6 +88,7 @@ public class JoinMatchViewController {
             footballToggleButton.setLayoutX(position);
             footballToggleButton.setVisible(true);
             footballToggleButton.setOnAction(event->beanJoinMatch.setSelectedSport("Football"));
+            this.hasFootball = true;
 
         }
         if (user.getPreferences().getTennis()) {
@@ -91,6 +98,7 @@ public class JoinMatchViewController {
             tennisToggleButton.setLayoutX(position);
             tennisToggleButton.setVisible(true);
             tennisToggleButton.setOnAction(event->beanJoinMatch.setSelectedSport("Tennis"));
+            this.hasTennis = true;
 
         }
         if (user.getPreferences().getPadel()) {
@@ -99,15 +107,17 @@ public class JoinMatchViewController {
             padelToggleButton.setLayoutX(position);
             padelToggleButton.setVisible(true);
             padelToggleButton.setOnAction(event->beanJoinMatch.setSelectedSport("Padel"));
+            this.hasPadel = true;
         }
     }
 
 
     public void startJoinMatch(){
         hideControls();
+        outcomeLabel.setOpacity(0);
         try{
-            beanJoinMatch.setMaxResults(resultTextField.getText());
             beanJoinMatch.setPreferredStartingTime(hourTextField.getText());
+            beanJoinMatch.setMaxResults(resultTextField.getText());
             beanJoinMatch.setDistanceIsImportant(distanceToggle.isSelected());
             beanJoinMatch.setAvailableSpotIsImportant(spotsToggle.isSelected());
         }
@@ -119,6 +129,7 @@ public class JoinMatchViewController {
             outcomeLabel.setText(e.getMessage());
             outcomeLabel.setTextFill(Color.RED);
             outcomeLabel.setVisible(true);
+            outcomeLabel.setOpacity(1);
             return;
 
         }
@@ -135,6 +146,7 @@ public class JoinMatchViewController {
                     """);
             outcomeLabel.setTextFill(Color.RED);
             outcomeLabel.setOpacity(1);
+            outcomeLabel.setVisible(true);
             return;
         }
         ResultSetEntity resultSet = beanJoinMatch.getResultSet();
@@ -177,7 +189,7 @@ public class JoinMatchViewController {
         distanceToggle.setVisible(false);
         spotsToggle.setVisible(false);
         infoButton.setVisible(false);
-        outcomeLabel.setVisible(false);
+        explainLabel.setMouseTransparent(true);
     }
     
     private void showControls(){
@@ -202,8 +214,20 @@ public class JoinMatchViewController {
     private void restartJoinMatch() {
         scrollPaneJoinMatch.setVisible(false);
         this.hideControls();
-        this.initialize();
         this.showControls();
+        //Mostra nuovamente i bottoni degli sport preferiti dall'utente
+        if(hasBasket) {
+            basketToggleButton.setVisible(true);
+        }
+        if(hasPadel){
+            padelToggleButton.setVisible(true);
+        }
+        if(hasFootball){
+            footballToggleButton.setVisible(true);
+        }
+        if(hasTennis) {
+            tennisToggleButton.setVisible(true);
+        }
         outcomeLabel.setText("Match joined successfully!");
         outcomeLabel.setTextFill(Color.GREEN);
 
@@ -211,7 +235,6 @@ public class JoinMatchViewController {
 
         blinkThenFade.play();
         
-        //label success
     }
 
 
