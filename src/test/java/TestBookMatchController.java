@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 //Test di Gianluca Maccari
 
-public class TestBookMatchController {
+class TestBookMatchController {
 
     private String testSportCenterName = "Test Sporting Club";
     private String testSport = "Football";
