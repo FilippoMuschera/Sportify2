@@ -14,7 +14,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
-
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.List;
