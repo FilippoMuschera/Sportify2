@@ -165,46 +165,58 @@ public class BookMatchCLI {
     //metodo che riceve il campo selezionato e recupera i timeslot
     private void selectCourt(){
         if(courtsList.isEmpty()){
-            for (Iterator<String> iterator = sportCenters.keySet().iterator(); iterator.hasNext(); ) {
-                String key = iterator.next();
-                if(key.equals(selectedSportCenter)){
-                    sportCenters.remove(key);
-                    break;
-                }
-            }
-
-            err.println("""
-                    
-                    The Sport Center you selected is full.
-                    Please choose another one.""");
+            deleteSportcenter(selectedSportCenter);
             selectSportCenter();
         }
         else {
             int selectedCourtIndex;
+
             while ((selectedCourtIndex = showCourts(courtsList)) < 0) {
                 //aspetto input corretto
             }
+
             selectedCourtIndex--;
             List<TimeSlot> timeTable = null;
             try {
                 timeTable = bookMatchController.selectedCourt(String.valueOf(selectedCourtIndex));
             }
             catch(SportCenterException e){
-                for(SportCourt s: courtsList){
-                    if(s.getCourtID() == selectedCourtIndex){
-                        courtsList.remove(s);
-                        break;
-                    }
-                }
-                err.println("""
-                    
-                    
-                    The Court you selected is full.
-                    Please select another one.""");
+                deleteCourt(selectedCourtIndex);
                 selectCourt();
             }
             selectTimeSlot(timeTable);
         }
+    }
+
+    private void deleteCourt(int courtId){
+        for(SportCourt s: courtsList){
+            if(s.getCourtID() == courtId){
+                courtsList.remove(s);
+                break;
+            }
+        }
+        err.println("""
+                    
+                    
+                    The Court you selected is full.
+                    Please select another one.""");
+
+    }
+
+
+    private void deleteSportcenter(String sportSelected){
+        for (Iterator<String> iterator = sportCenters.keySet().iterator(); iterator.hasNext(); ) {
+            String key = iterator.next();
+            if(key.equals(sportSelected)){
+                sportCenters.remove(key);
+                break;
+            }
+        }
+
+        err.println("""
+                    
+                    The Sport Center you selected is full.
+                    Please choose another one.""");
     }
 
 
