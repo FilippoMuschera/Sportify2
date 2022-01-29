@@ -15,6 +15,8 @@ import static java.lang.System.*;
 
 public class JoinMatchCLI {
 
+    JoinMatchBean bean;
+
     public void showJoinMatchCLI() {
         while (this.joinMatch() > 0) {
             //interagisci con l'utente fino a ottenere un input corretto o fino a tornare alla home
@@ -85,7 +87,7 @@ public class JoinMatchCLI {
             }
 
         }
-        JoinMatchBean bean = new JoinMatchBean();
+        bean = new JoinMatchBean();
         bean.setSelectedSport(sportString);
         out.println("At what time would you like to play?");
         try {
@@ -97,14 +99,7 @@ public class JoinMatchCLI {
                     Please select 1 for "closer matches" ot "2" for "more people" (default is 2)
                     """);
             int filter = scanner.nextInt();
-            if (filter == 1){
-                bean.setDistanceIsImportant(true);
-                bean.setAvailableSpotIsImportant(false);
-            }
-            else {
-                bean.setAvailableSpotIsImportant(true);
-                bean.setDistanceIsImportant(false);
-            }
+            this.setFilter(filter);
 
 
         } catch (IllegalArgumentException e){
@@ -145,5 +140,16 @@ public class JoinMatchCLI {
 
 
         return 0;
+    }
+
+    private void setFilter(int filter) {
+        if (filter == 1){
+            bean.setDistanceIsImportant(true);
+            bean.setAvailableSpotIsImportant(false);
+        }
+        else {
+            bean.setAvailableSpotIsImportant(true);
+            bean.setDistanceIsImportant(false);
+        }
     }
 }
