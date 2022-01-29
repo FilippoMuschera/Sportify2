@@ -6,12 +6,13 @@ import com.sportify.sportcenter.exceptions.SportCenterException;
 import com.sportify.user.UserEntity;
 import com.sportify.utilitiesui.DisappearingLabel;
 import com.sportify.utilitiesui.UIController;
-import javafx.animation.*;
+import javafx.animation.SequentialTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
+
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.List;

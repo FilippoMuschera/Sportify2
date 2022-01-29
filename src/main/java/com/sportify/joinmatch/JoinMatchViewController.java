@@ -5,12 +5,10 @@ import com.sportify.sportcenter.exceptions.SportCenterException;
 import com.sportify.user.UserEntity;
 import com.sportify.utilitiesui.DisappearingLabel;
 import com.sportify.utilitiesui.UIController;
-import javafx.animation.*;
+import javafx.animation.SequentialTransition;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
-import javafx.util.Duration;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
