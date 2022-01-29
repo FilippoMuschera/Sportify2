@@ -66,20 +66,7 @@
       <recent name="com.sportify.login" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.StartUI">
-    <configuration name="StartCLI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.sportify.cli.StartCLI" />
-      <module name="SportifyUI" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.sportify.cli.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JUnit.All in SportifyUI">
     <configuration name="StartUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.sportify.utilitiesui.StartUI" />
       <module name="SportifyUI" />
@@ -89,6 +76,14 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="All in SportifyUI" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="SportifyUI" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -103,31 +98,30 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestGeolocator.testGetCoordinates" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Sportify" />
+    <configuration name="TestGeolocator" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="SportifyUI" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="TestGeolocator" />
-      <option name="METHOD_NAME" value="testGetCoordinates" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TestGeolocator.testTime" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Sportify" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="TestGeolocator" />
-      <option name="METHOD_NAME" value="testTime" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <configuration name="TestGetSportCenterDAO.testGetNearSportCenter" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Sportify" />
+      <module name="SportifyUI" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="TestGetSportCenterDAO" />
       <option name="METHOD_NAME" value="testGetNearSportCenter" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestJoinMatchController.testFindJoinableMatch" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="SportifyUI" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="TestJoinMatchController" />
+      <option name="METHOD_NAME" value="testFindJoinableMatch" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -146,11 +140,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.All in SportifyUI" />
+        <item itemvalue="JUnit.TestJoinMatchController.testFindJoinableMatch" />
         <item itemvalue="Application.StartUI" />
-        <item itemvalue="Application.StartCLI" />
-        <item itemvalue="JUnit.TestGeolocator.testTime" />
         <item itemvalue="JUnit.TestGetSportCenterDAO.testGetNearSportCenter" />
-        <item itemvalue="JUnit.TestGeolocator.testGetCoordinates" />
+        <item itemvalue="JUnit.TestGeolocator" />
       </list>
     </recent_temporary>
   </component>
@@ -211,7 +205,7 @@
       <workItem from="1643359964631" duration="22771000" />
       <workItem from="1643392720517" duration="6152000" />
       <workItem from="1643450129633" duration="5843000" />
-      <workItem from="1643465041143" duration="3693000" />
+      <workItem from="1643465041143" duration="9868000" />
     </task>
     <servers />
   </component>
