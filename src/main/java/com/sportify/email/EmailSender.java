@@ -31,15 +31,15 @@ public class EmailSender {
                     new InternetAddress(UserEntity.getInstance().getEmail()));
 
             // Set Subject: header field
-            message.setSubject("Booking confirmation");
+            message.setSubject("Match Reminder");
 
             //create the message
             String messageBody = """
-                    Hello, this email is a confirmation and a reminder of the booking you made through Sportify!
+                    Hello, this email is a reminder of the match you joined through Sportify!
                     
                     Details:
-                    You booked the %s field/court number %s, at the sport center in %s.
-                    You booked this court/filed from %d to %d, don't be late!
+                    You joined a %s match on field/court number %s, at the sport center in %s.
+                    The match you joined is from %d to %d, don't be late!
                     
                     Thanks for using our service,
                     Sportify Team

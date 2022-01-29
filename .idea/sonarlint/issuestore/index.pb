@@ -24,8 +24,6 @@ h
 \
 ,src/main/java/com/sportify/cli/StartCLI.java,9\d\9d14dc8730c543be104d123aa2c235f9b5fba246
 a
-1src/main/java/com/sportify/email/EmailSender.java,0\f\0fc328fde3a8b7245fe90b4bfb78338d831478bb
-a
 1src/main/java/com/sportify/email/EmailThread.java,3\5\35da6a8cbf5896d193fcf95800865d172cc51b68
 f
 6src/main/java/com/sportify/geolocation/Geolocator.java,b\f\bf8cb173d84931b26ffc52df04b7311388149466
