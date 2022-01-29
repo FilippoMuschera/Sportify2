@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class TestJoinMatchController {
+class TestJoinMatchController {
 
     @Test
     void testFindJoinableMatch(){
