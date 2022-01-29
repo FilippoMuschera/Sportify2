@@ -47,6 +47,10 @@ public class BookMatchController {
         return nearSportCenters;
     }
 
+    public void istantiateStateMachine(){
+        stateMachine = BMStateMachineImplementation.getBMStateMachineImplementation();
+    }
+
     public List<SportCourt> selectedSportCenter(String sportCenterName){
 
         stateMachine.setState(new CourtState());

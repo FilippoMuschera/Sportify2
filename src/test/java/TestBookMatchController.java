@@ -1,8 +1,11 @@
 import com.sportify.bookmatch.BookMatchController;
+import com.sportify.bookmatch.statemachine.BMStateMachineImplementation;
 import com.sportify.sportcenter.*;
 import com.sportify.sportcenter.courts.SportCourt;
 import com.sportify.sportcenter.courts.TennisCourt;
 import com.sportify.sportcenter.courts.TimeSlot;
+import com.sportify.user.UserEntity;
+import com.sportify.user.UserPreferences;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalTime;
@@ -16,9 +19,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class TestBookMatchController {
 
-    private String testSportCenterName = "Test Sporting Club";
-    private String testSport = "Football";
-    private int testIdCourt = 3;
+    private String testSportCenterName = "TestSportingClub";
+    private String testSport = "Tennis";
+    private int testIdCourt = 0;
     private BookMatchController bookMatchController = BookMatchController.getBookMatchControllerInstance();
     private int testStartTime = 6;
     private int testFinishTime = 8;
@@ -29,7 +32,7 @@ class TestBookMatchController {
     //per cambiare tipo di TimeSlot occhio ai maxSpots e il testSport
     //Football 10, Padel 4, Tennis 4, Basket 10
 
-    private int testMaxSpots = 10;
+    private int testMaxSpots = 4;
 
     private SportCenterEntity createdEntity;
 
@@ -52,11 +55,19 @@ class TestBookMatchController {
         testCourtList.add(testCourt);
 
         SportCenterEntity testEntity = new SportCenterEntity();
-        SportCenterInfo testSCInfo = new SportCenterInfo("",testSportCenterName,"",false);
+        SportCenterInfo testSCInfo = new SportCenterInfo("admin@admin.it",testSportCenterName,"Viale degli ingegneri, 1, Roma, 00133",false);
 
         testEntity.setCourts(court);
 
         testEntity.setInfo(testSCInfo);
+
+        UserEntity user = UserEntity.getInstance();
+        UserPreferences preferences = new UserPreferences(3, true, true, true, true, false, "Viale degli ingegneri, 1, Roma, 00133");
+        user.setPreferences(preferences);
+
+        SportCenterTime sportCenterTime = new SportCenterTime(4,22);
+
+        testEntity.setTimetable(sportCenterTime);
 
         AddSportCenterDAO testDAO = new AddSportCenterDAO();
         testDAO.addSCToDB(testEntity);
@@ -74,33 +85,38 @@ class TestBookMatchController {
     void testSelectedSportCenter(){
         createTestSCEntity();
 
+        bookMatchController.istantiateStateMachine();
         bookMatchController.setSelectedSport(testSport);
         List<SportCourt> resultCourtList = bookMatchController.selectedSportCenter(testSportCenterName);
         deleteTestSCEntity();
 
-        assertEquals(testCourtList,resultCourtList);
+        assertEquals(testIdCourt,resultCourtList.get(0).getCourtID());
     }
 
     @Test
     void testSelectedCourt(){
         createTestSCEntity();
 
+        bookMatchController.istantiateStateMachine();
         bookMatchController.setCourtList(testCourtList);
         List<TimeSlot> resultTimeTable = bookMatchController.selectedCourt(""+testIdCourt);
         deleteTestSCEntity();
 
-        assertEquals(testTimetable,resultTimeTable);
+        assertEquals(testTimetable.get(0).getStartTime().getHour(),resultTimeTable.get(0).getStartTime().getHour());
     }
 
     @Test
     void testBookMatch(){
         createTestSCEntity();
 
+        bookMatchController.setSelectedSportCenter(testSportCenterName);
+        bookMatchController.setSelectedSport(testSport);
         bookMatchController.setSelectedTimeSlot(testTimetable.get(0));
         bookMatchController.setTimeTable(testTimetable);
         bookMatchController.bookMatch();
 
         SportCenterCourts resultCourts = GetSportCenterDAO.getInstance().getSportCenter(testSportCenterName,testSport).getCourts();
+
         List<SportCourt> resultCourtList = switch (testSport) {
             case "Basket" -> resultCourts.getBasketCourts();
             case "Football" -> resultCourts.getFootballFields();
