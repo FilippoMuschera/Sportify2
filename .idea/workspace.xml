@@ -141,8 +141,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.All in SportifyUI" />
-        <item itemvalue="JUnit.TestJoinMatchController.testFindJoinableMatch" />
         <item itemvalue="Application.StartUI" />
+        <item itemvalue="JUnit.TestJoinMatchController.testFindJoinableMatch" />
         <item itemvalue="JUnit.TestGetSportCenterDAO.testGetNearSportCenter" />
         <item itemvalue="JUnit.TestGeolocator" />
       </list>
@@ -205,7 +205,8 @@
       <workItem from="1643359964631" duration="22771000" />
       <workItem from="1643392720517" duration="6152000" />
       <workItem from="1643450129633" duration="5843000" />
-      <workItem from="1643465041143" duration="10253000" />
+      <workItem from="1643465041143" duration="15226000" />
+      <workItem from="1643550674339" duration="346000" />
     </task>
     <servers />
   </component>
@@ -217,6 +218,7 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/StartUI_java$TestGeolocator_testGetCoordinates.ic" NAME="TestGeolocator.testGetCoordinates Coverage Results" MODIFIED="1643224471388" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/StartUI_java$All_in_SportifyUI.ic" NAME="All in SportifyUI Coverage Results" MODIFIED="1643481537916" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/StartUI_java$TestGeolocator_testValidateInput.ic" NAME="TestGeolocator.testValidateInput Coverage Results" MODIFIED="1643222533559" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

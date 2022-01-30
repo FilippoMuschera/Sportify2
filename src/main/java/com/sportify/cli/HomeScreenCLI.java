@@ -108,7 +108,9 @@ public class HomeScreenCLI {
                 • What is my "Radius of Interest"?
                                 
                 Is the maximum distance you're willing to travel to reach a sports center. 
-                We will only suggest you sports centers that are within this radius.
+                We will only you sports centers that are within this radius. If we can't find a sport
+                center in this radius, we will (temporarily) increase your radius to find a sport center.
+                Your settings will not be affected by this, so you will not have to change back your radius.
                                 
                 • Can I add my sports center to the app?
                                 
