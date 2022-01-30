@@ -42,8 +42,8 @@ public class SportCenterCourts {
             case "Padel" -> this.padelCourts.add(court);
             case "Basket" -> this.basketCourts.add(court);
             case "Tennis" -> this.tennisCourts.add(court);
-            default -> { /* se il campo sport è errato non si aggiunge nessun campo */} //Il default viene inserito per
-            //completezza del blocco switch, altrimenti genererebbe code smell
+            default -> { /* se il campo sport è errato non si aggiunge nessun campo */} //Il caso di
+            // default non è necessario del tutto
         }
     }
 

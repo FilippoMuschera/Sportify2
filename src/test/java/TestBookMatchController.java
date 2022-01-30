@@ -14,9 +14,9 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-
-//Test di Gianluca Maccari
-
+/*************
+Test di Gianluca Maccari
+**************/
 class TestBookMatchController {
 
     private String testSportCenterName = "TestSportingClub";
@@ -29,8 +29,6 @@ class TestBookMatchController {
     private List<TimeSlot> testTimetable;
     private int testSpotsLeft = 0;
 
-    //per cambiare tipo di TimeSlot occhio ai maxSpots e il testSport
-    //Football 10, Padel 4, Tennis 4, Basket 10
 
     private int testMaxSpots = 4;
 
