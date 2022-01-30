@@ -29,6 +29,7 @@ public class BookMatchCLI {
     public void startBookMatch(){
         int selectedSport;
         while ((selectedSport = showSports()) < 0) {
+            //attendo input da utente
         }
         switch(selectedSport){
             case 1:
