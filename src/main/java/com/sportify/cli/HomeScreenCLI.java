@@ -96,26 +96,26 @@ public class HomeScreenCLI {
         out.println("""
                 • How is my address used?
                                 
-                Your address is the point from where is calculated your radius of interest. 
-                It can be your home address, your working-place address, or your current address. 
+                Your address is the point from where is calculated your radius of interest.
+                It can be your home address, your working-place address, or your current address.
                 It's up to you!
                                 
                 • What is a "Joinable Match"?
                                 
-                A joinable match is a match of the selected sport, where the organizer is still looking 
+                A joinable match is a match of the selected sport, where the organizer is still looking
                 for people to play with. If you'd like you can join the match to play with other people.
                                 
                 • What is my "Radius of Interest"?
                                 
-                Is the maximum distance you're willing to travel to reach a sports center. 
+                Is the maximum distance you're willing to travel to reach a sports center.
                 We will only you sports centers that are within this radius. If we can't find a sport
                 center in this radius, we will (temporarily) increase your radius to find a sport center.
                 Your settings will not be affected by this, so you will not have to change back your radius.
                                 
                 • Can I add my sports center to the app?
                                 
-                Yes, if you are the owner of a sports center and you registered in the app as such, you 
-                can click on the "+" button on the bottom-left-hand side in the Home Screen, 
+                Yes, if you are the owner of a sports center and you registered in the app as such, you
+                can click on the "+" button on the bottom-left-hand side in the Home Screen,
                 fill the form, and then your sports center will be added to our database.""");
 
         showCLIHomeScreen();
