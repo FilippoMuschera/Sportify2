@@ -60,7 +60,8 @@ public class BookMatchController {
 
     public List<TimeSlot> selectedCourt(String courtID) throws SportCenterException{
 
-        this.timeTable = courtList.get(selectedCourtID).getBookingTable();
+        setSelectedCourtID(Integer.parseInt(courtID));
+        this.timeTable = courtList.get(Integer.parseInt(courtID)).getBookingTable();
 
         stateMachine.setState(new HourSlotState());
         stateMachine.getState().entry(courtID);
