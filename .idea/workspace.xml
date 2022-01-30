@@ -66,7 +66,7 @@
       <recent name="com.sportify.login" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.All in SportifyUI">
+  <component name="RunManager" selected="Application.StartUI">
     <configuration name="StartUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.sportify.utilitiesui.StartUI" />
       <module name="SportifyUI" />
@@ -140,8 +140,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.All in SportifyUI" />
         <item itemvalue="Application.StartUI" />
+        <item itemvalue="JUnit.All in SportifyUI" />
         <item itemvalue="JUnit.TestJoinMatchController.testFindJoinableMatch" />
         <item itemvalue="JUnit.TestGetSportCenterDAO.testGetNearSportCenter" />
         <item itemvalue="JUnit.TestGeolocator" />
@@ -206,7 +206,8 @@
       <workItem from="1643392720517" duration="6152000" />
       <workItem from="1643450129633" duration="5843000" />
       <workItem from="1643465041143" duration="15226000" />
-      <workItem from="1643550674339" duration="943000" />
+      <workItem from="1643550674339" duration="5804000" />
+      <workItem from="1643569625282" duration="5572000" />
     </task>
     <servers />
   </component>

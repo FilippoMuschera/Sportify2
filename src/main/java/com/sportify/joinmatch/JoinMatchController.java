@@ -154,7 +154,18 @@ public class JoinMatchController {
 
     private double calculateIndexValue(ResultElement element) {
 
-        /* Qui ci va un bel commento che spiega cos'è e come si calcola l'indexValue */
+        /*
+         * L'indexValue viene usato per classificare i vari JoinableMatch dal migliore al peggiore. Per calcolarlo si
+         * usano: il raggio di ricerca scelto dall'utente, il numero massimo di posti che un campo può avere, la distanza
+         * del campo dall'utente e i posti liberi rimanenti.
+         * La formula base è (distanzaDallUtente/RaggioSceltoDallUtente) + (postiRimasti/massimoNumeroDiPosti).
+         * Inoltre, per tenere conto delle preferenze dell'utente si "pesano" questi due elementi: il primo elemento è
+         * moltiplicato per pondDist, il secondo per pondAvailableSpots. In base alle scelte dell'utente, queste due variabili
+         * possono avere "highWeight" o "lowWeight", così da dare più peso al fatto che un joinableMatch sia in un campo
+         * vicino, oppure che rimangano pochi posti (e che quindi sia quasi completo).
+         * I ResultElement vengono poi ordinati per ordine crescente di indexValue: un valore di indexValue più vicino allo
+         * zero è preferibile, perchè significa che il joinable match rispecchia meglio le richieste dell'utente.
+         */
 
         double selectedDistance = UserEntity.getInstance().getPreferences().getSortingDistance();
         double maxAvailableSpots = element.getMaxSpots();
