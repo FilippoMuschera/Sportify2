@@ -42,12 +42,6 @@ public class BookMatchController {
         return BookMatchController.singleBookMatchControllerInstance;
     }
 
-    public void istantiateStateMachine(){
-        if(stateMachine != null) {
-            stateMachine = BMStateMachineImplementation.getBMStateMachineImplementation();
-        }
-    }
-
     public void executeState(String contextString) throws NoSportCenterException, DeletedCourtException{
 
         stateMachine.getState().goNext();
