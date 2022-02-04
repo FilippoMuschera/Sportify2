@@ -1,5 +1,7 @@
 package com.sportify.bookmatch;
 
+import com.sportify.bookmatch.exception.DeletedCourtException;
+import com.sportify.bookmatch.exception.NoSportCenterException;
 import com.sportify.sportcenter.courts.SportCourt;
 import com.sportify.sportcenter.courts.TimeSlot;
 import com.sportify.sportcenter.exceptions.SportCenterException;
@@ -141,11 +143,12 @@ public class BookMatchViewController {
         this.hideButtons();
 
         try {
-            sportCenterList = bookMatchController.startStateMachine(selectedSport);
+            bookMatchController.executeState(selectedSport);
+            sportCenterList = bookMatchController.getReturnNearSportCenters();
             enableScrollPane();
             displaySportCenters(sportCenterList);
         }
-        catch(SportCenterException e){
+        catch(NoSportCenterException e){
             displayError();
         }
     }
@@ -190,7 +193,8 @@ public class BookMatchViewController {
 
     private void selectedSportCenter(String sportCenterName){
         selectedSportCenter = sportCenterName;
-        courtsList = bookMatchController.selectedSportCenter(sportCenterName);
+        bookMatchController.executeState(sportCenterName);
+        courtsList = bookMatchController.getReturnCourtList();
         this.displayCourts(courtsList);
     }
 
@@ -217,17 +221,12 @@ public class BookMatchViewController {
 
     private void selectedCourt(String id){
         try {
-            List<TimeSlot> timeTable = bookMatchController.selectedCourt(id);
+            bookMatchController.executeState(id);
+            List<TimeSlot> timeTable = bookMatchController.getReturnTimeTable();
             this.displayHourSlots(timeTable);
         }
-        catch(SportCenterException exception){
-            for(SportCourt s: courtsList){
-                if(s.getCourtID() == Integer.parseInt(id)){
-                    courtsList.remove(s);
-                    deletedCourt();
-                    break;
-                }
-            }
+        catch(DeletedCourtException exception){
+            deletedCourt();
             displayCourts(courtsList);
         }
     }
@@ -263,12 +262,12 @@ public class BookMatchViewController {
     }
 
     public void createBookMatch(){
-        bookMatchController.bookMatch();
+        bookMatchController.executeState("Book Match");
         restartBookMatch();
     }
 
     public void createJoinMatch(){
-        bookMatchController.createJoinMatch();
+        bookMatchController.executeState("Join Match");
         restartBookMatch();
     }
 

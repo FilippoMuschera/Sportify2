@@ -13,6 +13,16 @@ public class CourtState implements BMStateInterface {
 
     private List<SportCourt> courtList;
     private BookMatchController bookMatchController = BookMatchController.getBookMatchControllerInstance();
+    private static CourtState instance = null;
+
+    protected CourtState(){}
+
+    public static CourtState getCourtStateInstance(){
+        if (CourtState.instance == null){
+            CourtState.instance = new CourtState();
+        }
+        return CourtState.instance;
+    }
 
     @Override
     public void entry(String sportCenterName){
@@ -40,6 +50,12 @@ public class CourtState implements BMStateInterface {
             default:
         }
 
-        bookMatchController.setCourtList(courtList);
+        bookMatchController.setReturnCourtList(courtList);
+    }
+
+    @Override
+    public void goNext(){
+        BMStateMachineImplementation stateMachine = BMStateMachineImplementation.getBMStateMachineImplementation();
+        stateMachine.setState(HourSlotState.getHourtSlotInstance());
     }
 }

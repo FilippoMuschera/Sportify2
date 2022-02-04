@@ -1,15 +1,15 @@
 package com.sportify.bookmatch;
 
+import com.sportify.bookmatch.exception.DeletedCourtException;
+import com.sportify.bookmatch.exception.NoSportCenterException;
+import com.sportify.bookmatch.exception.NoTimeSlotException;
 import com.sportify.bookmatch.statemachine.BMStateMachineImplementation;
-import com.sportify.bookmatch.statemachine.CourtState;
-import com.sportify.bookmatch.statemachine.HourSlotState;
 import com.sportify.email.EmailThread;
 import com.sportify.sportcenter.AddSportCenterDAO;
 import com.sportify.sportcenter.GetSportCenterDAO;
 import com.sportify.sportcenter.SportCenterInfo;
 import com.sportify.sportcenter.courts.SportCourt;
 import com.sportify.sportcenter.courts.TimeSlot;
-import com.sportify.sportcenter.exceptions.SportCenterException;
 import com.sportify.user.UserEntity;
 
 import java.util.List;
@@ -20,74 +20,63 @@ public class BookMatchController {
 
     private BMStateMachineImplementation stateMachine;
     private String selectedSport;
-    private List<SportCourt> courtList;
     private int selectedCourtID;
-    private List<TimeSlot> timeTable;
     private TimeSlot selectedTimeSlot;
     private String selectedSportCenter;
-    private Map<String, Double> nearSportCenters;
+
+    //attributi che sono usati dal bookMatchViewController
+    private Map<String, Double> returnNearSportCenters;
+    private List<TimeSlot> returnTimeTable;
+    private List<SportCourt> returnCourtList;
 
     private static com.sportify.bookmatch.BookMatchController singleBookMatchControllerInstance = null;
 
-    protected BookMatchController(){}
-
-    public static com.sportify.bookmatch.BookMatchController getBookMatchControllerInstance(){
-        if (com.sportify.bookmatch.BookMatchController.singleBookMatchControllerInstance == null){
-            com.sportify.bookmatch.BookMatchController.singleBookMatchControllerInstance = new com.sportify.bookmatch.BookMatchController();
-        }
-        return com.sportify.bookmatch.BookMatchController.singleBookMatchControllerInstance;
+    protected BookMatchController(){
+        stateMachine = BMStateMachineImplementation.getBMStateMachineImplementation();
     }
 
-
-    public Map<String, Double> startStateMachine(String sport) throws SportCenterException{
-
-        stateMachine = BMStateMachineImplementation.getBMStateMachineImplementation();
-        stateMachine.initializeState();
-        stateMachine.getState().entry(sport);
-        return nearSportCenters;
+    public static BookMatchController getBookMatchControllerInstance(){
+        if (BookMatchController.singleBookMatchControllerInstance == null){
+            BookMatchController.singleBookMatchControllerInstance = new BookMatchController();
+        }
+        return BookMatchController.singleBookMatchControllerInstance;
     }
 
     public void istantiateStateMachine(){
-        stateMachine = BMStateMachineImplementation.getBMStateMachineImplementation();
+        if(stateMachine != null) {
+            stateMachine = BMStateMachineImplementation.getBMStateMachineImplementation();
+        }
     }
 
-    public List<SportCourt> selectedSportCenter(String sportCenterName){
+    public void executeState(String contextString) throws NoSportCenterException, DeletedCourtException{
 
-        stateMachine.setState(new CourtState());
-        stateMachine.getState().entry(sportCenterName);
-        return courtList;
-    }
+        stateMachine.getState().goNext();
+        try{
+            stateMachine.getState().entry(contextString);
+        }
+        catch(NoTimeSlotException e){
 
-    public List<TimeSlot> selectedCourt(String courtID) throws SportCenterException{
+            for(SportCourt s: returnCourtList){
+                if(s.getCourtID() == Integer.parseInt(contextString)){
+                    returnCourtList.remove(s);
+                    break;
+                }
+            }
+            throw new DeletedCourtException();
+        }
 
-        setSelectedCourtID(Integer.parseInt(courtID));
-        this.timeTable = courtList.get(Integer.parseInt(courtID)).getBookingTable();
-
-        stateMachine.setState(new HourSlotState());
-        stateMachine.getState().entry(courtID);
-        return timeTable;
     }
 
     public void createJoinMatch(){
 
-        for(TimeSlot t:timeTable){
-            if(t == selectedTimeSlot){
-                selectedTimeSlot.setAvailableSpots(selectedTimeSlot.getAvailableSpots()-1);
-                break;
-            }
-        }
+        selectedTimeSlot.setAvailableSpots(selectedTimeSlot.getAvailableSpots()-1);
         updateAvailableSpots();
         this.sendEmail();
     }
 
     public void bookMatch(){
 
-        for(TimeSlot t:timeTable) {
-            if (t == selectedTimeSlot) {
-                selectedTimeSlot.setAvailableSpots(0);
-                break;
-            }
-        }
+        selectedTimeSlot.setAvailableSpots(0);
         updateAvailableSpots();
         this.sendEmail();
     }
@@ -120,12 +109,12 @@ public class BookMatchController {
 
     }
 
-    public void setCourtList(List<SportCourt> list){
-        this.courtList = list;
+    public void setReturnCourtList(List<SportCourt> list){
+        this.returnCourtList = list;
     }
 
-    public List<SportCourt> getCourtList(){
-        return this.courtList;
+    public List<SportCourt> getReturnCourtList(){
+        return this.returnCourtList;
     }
 
     public String getSelectedSport(){
@@ -145,7 +134,11 @@ public class BookMatchController {
     }
 
     public void setNearSportCentersMap(Map<String, Double> nearSportCenters){
-        this.nearSportCenters = nearSportCenters;
+        this.returnNearSportCenters = nearSportCenters;
+    }
+
+    public Map<String, Double> getReturnNearSportCenters(){
+        return returnNearSportCenters;
     }
 
     public int getSelectedCourtID(){
@@ -156,8 +149,12 @@ public class BookMatchController {
         this.selectedCourtID = selectedCourtID;
     }
 
-    public void setTimeTable(List<TimeSlot> timeTable){
-        this.timeTable = timeTable;
+    public void setReturnTimeTable(List<TimeSlot> returnTimeTable){
+        this.returnTimeTable = returnTimeTable;
+    }
+
+    public List<TimeSlot> getReturnTimeTable(){
+        return returnTimeTable;
     }
 }
 

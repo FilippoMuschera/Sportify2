@@ -7,7 +7,9 @@ public class BMStateMachineImplementation implements BMStateMachineInterface {
 
     private static BMStateMachineImplementation singleBMSMInstance = null;
 
-    protected BMStateMachineImplementation(){}
+    protected BMStateMachineImplementation(){
+        initializeState();
+    }
 
     public static BMStateMachineImplementation getBMStateMachineImplementation(){
         if (BMStateMachineImplementation.singleBMSMInstance == null){
@@ -18,7 +20,7 @@ public class BMStateMachineImplementation implements BMStateMachineInterface {
 
     @Override
     public void initializeState(){
-        currentState = new SportCenterState();
+        currentState = new InitState();
     }
 
     @Override

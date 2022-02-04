@@ -1,9 +1,10 @@
 package com.sportify.cli;
 
 import com.sportify.bookmatch.BookMatchController;
+import com.sportify.bookmatch.exception.DeletedCourtException;
+import com.sportify.bookmatch.exception.NoSportCenterException;
 import com.sportify.sportcenter.courts.SportCourt;
 import com.sportify.sportcenter.courts.TimeSlot;
-import com.sportify.sportcenter.exceptions.SportCenterException;
 import com.sportify.user.UserEntity;
 import com.sportify.user.UserPreferences;
 
@@ -99,10 +100,11 @@ public class BookMatchCLI {
     //metodo che recupera i sport centers dello sport selezionato
     private void getSportCenters(String sportName){
         try {
-            sportCenters = bookMatchController.startStateMachine(sportName);
+            bookMatchController.executeState(sportName);
+            sportCenters = bookMatchController.getReturnNearSportCenters();
             selectSportCenter();
         }
-        catch(SportCenterException e){
+        catch(NoSportCenterException e){
             err.println("""
                     
                     There are no Sport Centers in your area.
@@ -132,7 +134,8 @@ public class BookMatchCLI {
                 }
                 i++;
             }
-            courtsList = bookMatchController.selectedSportCenter(selectedSportCenter);
+            bookMatchController.executeState(selectedSportCenter);
+            courtsList = bookMatchController.getReturnCourtList();
             selectCourt();
         }
     }
@@ -178,31 +181,20 @@ public class BookMatchCLI {
             selectedCourtIndex--;
             List<TimeSlot> timeTable = null;
             try {
-                timeTable = bookMatchController.selectedCourt(String.valueOf(selectedCourtIndex));
+                bookMatchController.executeState(String.valueOf(selectedCourtIndex));
+                timeTable = bookMatchController.getReturnTimeTable();
             }
-            catch(SportCenterException e){
-                deleteCourt(selectedCourtIndex);
+            catch(DeletedCourtException e){
+                err.println("""
+                    
+                    
+                    The Court you selected is full.
+                    Please select another one.""");
                 selectCourt();
             }
             selectTimeSlot(timeTable);
         }
     }
-
-    private void deleteCourt(int courtId){
-        for(SportCourt s: courtsList){
-            if(s.getCourtID() == courtId){
-                courtsList.remove(s);
-                break;
-            }
-        }
-        err.println("""
-                    
-                    
-                    The Court you selected is full.
-                    Please select another one.""");
-
-    }
-
 
     private void deleteSportcenter(String sportSelected){
         for (Iterator<String> iterator = sportCenters.keySet().iterator(); iterator.hasNext(); ) {
@@ -293,10 +285,10 @@ public class BookMatchCLI {
         }
         switch(selectedOperation){
             case 1:
-                bookMatchController.bookMatch();
+                bookMatchController.executeState("Book Match");
                 break;
             case 2:
-                bookMatchController.createJoinMatch();
+                bookMatchController.executeState("Join Match");
                 break;
             default:
         }

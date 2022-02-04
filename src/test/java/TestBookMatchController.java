@@ -80,24 +80,27 @@ class TestBookMatchController {
     }
 
     @Test
-    void testSelectedSportCenter(){
+    void testCourtState(){
         createTestSCEntity();
-
-        bookMatchController.istantiateStateMachine();
+        BMStateMachineImplementation stateMachine = BMStateMachineImplementation.getBMStateMachineImplementation();
+        stateMachine.getState().goNext();
         bookMatchController.setSelectedSport(testSport);
-        List<SportCourt> resultCourtList = bookMatchController.selectedSportCenter(testSportCenterName);
+        bookMatchController.executeState(testSportCenterName);
+        List<SportCourt> resultCourtList = bookMatchController.getReturnCourtList();
         deleteTestSCEntity();
 
         assertEquals(testIdCourt,resultCourtList.get(0).getCourtID());
     }
 
     @Test
-    void testSelectedCourt(){
+    void testHourSlotState(){
         createTestSCEntity();
 
-        bookMatchController.istantiateStateMachine();
-        bookMatchController.setCourtList(testCourtList);
-        List<TimeSlot> resultTimeTable = bookMatchController.selectedCourt(""+testIdCourt);
+        BMStateMachineImplementation stateMachine = BMStateMachineImplementation.getBMStateMachineImplementation();
+        stateMachine.getState().goNext();
+        bookMatchController.setReturnCourtList(testCourtList);
+        bookMatchController.executeState(""+testIdCourt);
+        List<TimeSlot> resultTimeTable = bookMatchController.getReturnTimeTable();
         deleteTestSCEntity();
 
         assertEquals(testTimetable.get(0).getStartTime().getHour(),resultTimeTable.get(0).getStartTime().getHour());
@@ -106,11 +109,14 @@ class TestBookMatchController {
     @Test
     void testBookMatch(){
         createTestSCEntity();
-
+        BMStateMachineImplementation stateMachine = BMStateMachineImplementation.getBMStateMachineImplementation();
+        stateMachine.getState().goNext();
+        stateMachine.getState().goNext();
+        stateMachine.getState().goNext();
         bookMatchController.setSelectedSportCenter(testSportCenterName);
         bookMatchController.setSelectedSport(testSport);
         bookMatchController.setSelectedTimeSlot(testTimetable.get(0));
-        bookMatchController.setTimeTable(testTimetable);
+        bookMatchController.setReturnTimeTable(testTimetable);
         bookMatchController.bookMatch();
 
         SportCenterCourts resultCourts = GetSportCenterDAO.getInstance().getSportCenter(testSportCenterName,testSport).getCourts();
