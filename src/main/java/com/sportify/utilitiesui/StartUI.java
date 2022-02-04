@@ -14,6 +14,7 @@ import java.util.Objects;
 public class StartUI extends Application {
     @Override
     public void start(Stage stage) throws IOException {
+
         Font.loadFont(new FileInputStream("src/main/resources/com/sportify/utilitiesui/fonts/Playball-Regular.ttf"), 10);
         FXMLLoader fxmlLoader = new FXMLLoader(UIController.class.getResource("LogIn.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
