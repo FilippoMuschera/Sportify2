@@ -105,6 +105,7 @@ public class BookMatchCLI {
             selectSportCenter();
         }
         catch(NoSportCenterException e){
+            bookMatchController.executeGoBack();
             err.println("""
                     
                     There are no Sport Centers in your area.
@@ -116,6 +117,7 @@ public class BookMatchCLI {
     //metodo che riceve lo sport center selezionato e recupera i courts
     private void selectSportCenter(){
         if(sportCenters.isEmpty()){
+            bookMatchController.executeGoBack();
             err.println("""
                     The Sport Centers in your area are full.
                     Please change your address.""");
@@ -168,6 +170,7 @@ public class BookMatchCLI {
     //metodo che riceve il campo selezionato e recupera i timeslot
     private void selectCourt(){
         if(courtsList.isEmpty()){
+            bookMatchController.executeGoBack();
             deleteSportcenter(selectedSportCenter);
             selectSportCenter();
         }
@@ -185,6 +188,7 @@ public class BookMatchCLI {
                 timeTable = bookMatchController.getReturnTimeTable();
             }
             catch(DeletedCourtException e){
+                bookMatchController.executeGoBack();
                 err.println("""
                     
                     
