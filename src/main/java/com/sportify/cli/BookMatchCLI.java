@@ -110,6 +110,8 @@ public class BookMatchCLI {
                     
                     There are no Sport Centers in your area.
                     Please change your address in "Settings".""");
+            CLIController c = CLIController.getIstance();
+            c.showSettings();
         }
     }
 
