@@ -149,33 +149,17 @@ public class BookMatchViewController {
             displaySportCenters(sportCenterList);
         }
         catch(NoSportCenterException e){
+            bookMatchController.executeGoBack();
             displayError();
         }
-    }
-
-    private void displayError(){
-        errorLabel.setVisible(true);
-        errorLabel.setText("""
-                    There are no Sport Centers in your area.
-                    Please change your address in "Settings".""");
-    }
-
-    private void deletedAllSC(){
-        hidePopUpControls();
-        hideButtons();
-        scrollPaneBookMatch.setVisible(false);
-        errorLabel.setVisible(true);
-        errorLabel.setText("""
-                All the Sport Centers in your area are full.
-                please increase your "Radius of Interest" in your
-                "Settings".""");
     }
 
     @FXML
     private void displaySportCenters(Map<String, Double> nearSportCenters) {
 
         if(nearSportCenters.size() == 0){
-            deletedAllSC();
+            bookMatchController.executeGoBack();
+            deletedAllSportCenters();
         }
         else {
             customTilePane.createCustomTilePane();
@@ -203,6 +187,7 @@ public class BookMatchViewController {
 
         if(courtList.isEmpty()){
             sportCenterList.remove(selectedSportCenter);
+            bookMatchController.executeGoBack();
             deletedSportCenter();
             displaySportCenters(sportCenterList);
         }
@@ -226,6 +211,7 @@ public class BookMatchViewController {
             this.displayHourSlots(timeTable);
         }
         catch(DeletedCourtException exception){
+            bookMatchController.executeGoBack();
             deletedCourt();
             displayCourts(courtsList);
         }
@@ -278,6 +264,24 @@ public class BookMatchViewController {
         resultLabel.setText("Operation successfully completed!");
         resultLabel.setStyle("-fx-text-fill: rgba(0,255,0,1);");
         displayResultLabel(resultLabel);
+    }
+
+    private void displayError(){
+        errorLabel.setVisible(true);
+        errorLabel.setText("""
+                    There are no Sport Centers in your area.
+                    Please change your address in "Settings".""");
+    }
+
+    private void deletedAllSportCenters(){
+        hidePopUpControls();
+        hideButtons();
+        scrollPaneBookMatch.setVisible(false);
+        errorLabel.setVisible(true);
+        errorLabel.setText("""
+                All the Sport Centers in your area are full.
+                please increase your "Radius of Interest" in your
+                "Settings".""");
     }
 
     private void displayResultLabel(Label label){

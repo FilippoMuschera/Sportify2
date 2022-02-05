@@ -63,4 +63,10 @@ public class SportCenterState implements BMStateInterface {
         BMStateMachineImplementation stateMachine = BMStateMachineImplementation.getBMStateMachineImplementation();
         stateMachine.setState(CourtState.getCourtStateInstance());
     }
+
+    @Override
+    public void goBack(){
+        BMStateMachineImplementation stateMachine = BMStateMachineImplementation.getBMStateMachineImplementation();
+        stateMachine.setState(new InitState());
+    }
 }

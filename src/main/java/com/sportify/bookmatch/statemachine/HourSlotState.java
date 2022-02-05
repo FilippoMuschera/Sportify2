@@ -50,4 +50,10 @@ public class HourSlotState implements BMStateInterface {
         stateMachine.setState(new SelectionState());
     }
 
+    @Override
+    public void goBack(){
+        BMStateMachineImplementation stateMachine = BMStateMachineImplementation.getBMStateMachineImplementation();
+        stateMachine.setState(CourtState.getCourtStateInstance());
+    }
+
 }

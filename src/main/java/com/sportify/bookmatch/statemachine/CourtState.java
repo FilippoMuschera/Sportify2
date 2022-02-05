@@ -58,4 +58,10 @@ public class CourtState implements BMStateInterface {
         BMStateMachineImplementation stateMachine = BMStateMachineImplementation.getBMStateMachineImplementation();
         stateMachine.setState(HourSlotState.getHourtSlotInstance());
     }
+
+    @Override
+    public void goBack(){
+        BMStateMachineImplementation stateMachine = BMStateMachineImplementation.getBMStateMachineImplementation();
+        stateMachine.setState(SportCenterState.getSportCenterState());
+    }
 }

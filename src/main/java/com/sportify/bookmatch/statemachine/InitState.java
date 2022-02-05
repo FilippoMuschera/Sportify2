@@ -13,4 +13,9 @@ public class InitState implements BMStateInterface{
         BMStateMachineImplementation stateMachine = BMStateMachineImplementation.getBMStateMachineImplementation();
         stateMachine.setState(SportCenterState.getSportCenterState());
     }
+
+    @Override
+    public void goBack(){
+        //InitState non necessita di metodo goBack
+    }
 }

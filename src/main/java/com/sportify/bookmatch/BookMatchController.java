@@ -100,7 +100,10 @@ public class BookMatchController {
             ownerEmailThread.setOwner(true);
             ownerEmailThread.start();
         }
+    }
 
+    public void executeGoBack(){
+        stateMachine.getState().goBack();
     }
 
     public void setReturnCourtList(List<SportCourt> list){
