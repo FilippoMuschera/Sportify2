@@ -18,8 +18,7 @@ public class BMStateMachineImplementation implements BMStateMachineInterface {
         return BMStateMachineImplementation.singleBMSMInstance;
     }
 
-    @Override
-    public void initializeState(){
+    private void initializeState(){
         currentState = new InitState();
     }
 
@@ -28,7 +27,6 @@ public class BMStateMachineImplementation implements BMStateMachineInterface {
         return this.currentState;
     }
 
-    @Override
     public void setState(BMStateInterface state){
         this.currentState = state;
     }
