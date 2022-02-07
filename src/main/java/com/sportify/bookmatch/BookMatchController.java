@@ -44,9 +44,9 @@ public class BookMatchController {
 
     public void executeState(String contextString) throws NoSportCenterException, DeletedCourtException{
 
-        stateMachine.getState().goNext();
+        stateMachine.goNext();
         try{
-            stateMachine.getState().entry(contextString);
+            stateMachine.executeEntry(contextString);
         }
         catch(NoTimeSlotException e){
 

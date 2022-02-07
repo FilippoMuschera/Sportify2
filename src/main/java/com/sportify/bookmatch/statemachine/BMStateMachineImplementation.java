@@ -23,6 +23,14 @@ public class BMStateMachineImplementation implements BMStateMachineInterface {
     }
 
     @Override
+    public void goNext(){
+        currentState.goNext();
+    }
+
+    public void executeEntry(String context){
+        currentState.entry(context);
+    }
+
     public BMStateInterface getState(){
         return this.currentState;
     }
