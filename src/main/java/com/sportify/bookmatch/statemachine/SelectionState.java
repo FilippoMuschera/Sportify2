@@ -25,6 +25,6 @@ public class SelectionState implements BMStateInterface{
     public void goBack(){
         //questo metodo non viene mai invocato ma si potrebbe estendere il sistema e usarlo
         BMStateMachineImplementation stateMachine = BMStateMachineImplementation.getBMStateMachineImplementation();
-        stateMachine.setState(HourSlotState.getHourtSlotInstance());
+        stateMachine.setState(HourSlotState.getHourSlotInstance());
     }
 }

@@ -16,7 +16,7 @@ public class HourSlotState implements BMStateInterface {
 
     protected HourSlotState(){}
 
-    public static HourSlotState getHourtSlotInstance(){
+    public static HourSlotState getHourSlotInstance(){
         if (HourSlotState.instance == null){
             HourSlotState.instance = new HourSlotState();
         }

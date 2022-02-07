@@ -56,7 +56,7 @@ public class CourtState implements BMStateInterface {
     @Override
     public void goNext(){
         BMStateMachineImplementation stateMachine = BMStateMachineImplementation.getBMStateMachineImplementation();
-        stateMachine.setState(HourSlotState.getHourtSlotInstance());
+        stateMachine.setState(HourSlotState.getHourSlotInstance());
     }
 
     @Override
