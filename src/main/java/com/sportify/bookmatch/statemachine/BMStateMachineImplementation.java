@@ -8,7 +8,7 @@ public class BMStateMachineImplementation implements BMStateMachineInterface {
     private static BMStateMachineImplementation singleBMSMInstance = null;
 
     protected BMStateMachineImplementation(){
-        initializeState();
+        currentState = new InitState();
     }
 
     public static BMStateMachineImplementation getBMStateMachineImplementation(){
@@ -16,10 +16,6 @@ public class BMStateMachineImplementation implements BMStateMachineInterface {
             BMStateMachineImplementation.singleBMSMInstance = new BMStateMachineImplementation();
         }
         return BMStateMachineImplementation.singleBMSMInstance;
-    }
-
-    private void initializeState(){
-        currentState = new InitState();
     }
 
     @Override
