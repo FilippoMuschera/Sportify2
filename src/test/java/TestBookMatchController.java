@@ -98,6 +98,7 @@ class TestBookMatchController {
 
         BMStateMachineImplementation stateMachine = BMStateMachineImplementation.getBMStateMachineImplementation();
         stateMachine.getState().goNext();
+        stateMachine.getState().goNext();
         bookMatchController.setReturnCourtList(testCourtList);
         bookMatchController.executeState(""+testIdCourt);
         List<TimeSlot> resultTimeTable = bookMatchController.getReturnTimeTable();

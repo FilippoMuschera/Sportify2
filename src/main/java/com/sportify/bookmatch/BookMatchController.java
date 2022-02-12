@@ -39,6 +39,7 @@ public class BookMatchController {
         if (BookMatchController.singleBookMatchControllerInstance == null){
             BookMatchController.singleBookMatchControllerInstance = new BookMatchController();
         }
+
         return BookMatchController.singleBookMatchControllerInstance;
     }
 
@@ -100,6 +101,10 @@ public class BookMatchController {
             ownerEmailThread.setOwner(true);
             ownerEmailThread.start();
         }
+    }
+
+    public void executeInitStateMachine(){
+        stateMachine.initStateMAchine();
     }
 
     public void executeGoBack(){

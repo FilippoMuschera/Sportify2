@@ -11,7 +11,7 @@ public class InitState implements BMStateInterface{
     @Override
     public void goNext() {
         BMStateMachineImplementation stateMachine = BMStateMachineImplementation.getBMStateMachineImplementation();
-        stateMachine.setState(SportCenterState.getSportCenterState());
+        stateMachine.setState(new SportCenterState());
     }
 
     @Override

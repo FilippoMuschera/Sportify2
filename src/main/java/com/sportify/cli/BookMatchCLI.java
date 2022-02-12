@@ -99,6 +99,7 @@ public class BookMatchCLI {
 
     //metodo che recupera i sport centers dello sport selezionato
     private void getSportCenters(String sportName){
+        bookMatchController.executeInitStateMachine();
         try {
             bookMatchController.executeState(sportName);
             sportCenters = bookMatchController.getReturnNearSportCenters();

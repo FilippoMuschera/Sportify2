@@ -12,16 +12,6 @@ import java.util.List;
 public class HourSlotState implements BMStateInterface {
 
     private BookMatchController bookMatchController = BookMatchController.getBookMatchControllerInstance();
-    private static HourSlotState instance = null;
-
-    protected HourSlotState(){}
-
-    public static HourSlotState getHourSlotInstance(){
-        if (HourSlotState.instance == null){
-            HourSlotState.instance = new HourSlotState();
-        }
-        return HourSlotState.instance;
-    }
 
     @Override
     public void entry(String court) throws NoTimeSlotException {
@@ -53,7 +43,7 @@ public class HourSlotState implements BMStateInterface {
     @Override
     public void goBack(){
         BMStateMachineImplementation stateMachine = BMStateMachineImplementation.getBMStateMachineImplementation();
-        stateMachine.setState(CourtState.getCourtStateInstance());
+        stateMachine.setState(new CourtState());
     }
 
 }

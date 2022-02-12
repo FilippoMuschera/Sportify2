@@ -14,18 +14,7 @@ public class SportCenterState implements BMStateInterface {
 
     private BookMatchController bookMatchController = BookMatchController.getBookMatchControllerInstance();
     private static final int MAX_NUMBER_OF_RESULTS = 3;
-    private static SportCenterState instance = null;
     private static final int RETRY_CONSTANT = 30;
-
-
-    protected SportCenterState(){}
-
-    public static SportCenterState getSportCenterState(){
-        if (SportCenterState.instance == null){
-            SportCenterState.instance = new SportCenterState();
-        }
-        return SportCenterState.instance;
-    }
 
     @Override
     public void entry(String userSelectedSport) throws NoSportCenterException{
@@ -61,7 +50,7 @@ public class SportCenterState implements BMStateInterface {
     @Override
     public void goNext(){
         BMStateMachineImplementation stateMachine = BMStateMachineImplementation.getBMStateMachineImplementation();
-        stateMachine.setState(CourtState.getCourtStateInstance());
+        stateMachine.setState(new CourtState());
     }
 
     @Override

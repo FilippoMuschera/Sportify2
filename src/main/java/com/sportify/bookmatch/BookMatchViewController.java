@@ -141,6 +141,7 @@ public class BookMatchViewController {
 
     private void startBookMatch(String selectedSport){
         this.hideButtons();
+        bookMatchController.executeInitStateMachine();
 
         try {
             bookMatchController.executeState(selectedSport);

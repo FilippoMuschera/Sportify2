@@ -3,19 +3,25 @@ package com.sportify.bookmatch.statemachine;
 
 public class BMStateMachineImplementation implements BMStateMachineInterface {
 
-    private BMStateInterface currentState;
+    private static BMStateInterface currentState;
 
     private static BMStateMachineImplementation singleBMSMInstance = null;
 
-    protected BMStateMachineImplementation(){
-        currentState = new InitState();
-    }
+    private BMStateMachineImplementation(){}
 
     public static BMStateMachineImplementation getBMStateMachineImplementation(){
         if (BMStateMachineImplementation.singleBMSMInstance == null){
             BMStateMachineImplementation.singleBMSMInstance = new BMStateMachineImplementation();
         }
         return BMStateMachineImplementation.singleBMSMInstance;
+    }
+
+    public void initStateMAchine(){
+        currentState = new InitState();
+    }
+
+    private static void resetCurrentState(){
+        currentState = new SportCenterState();
     }
 
     @Override
