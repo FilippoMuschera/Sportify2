@@ -104,7 +104,7 @@ public class BookMatchController {
     }
 
     public void executeInitStateMachine(){
-        stateMachine.initStateMAchine();
+        stateMachine.initStateMachine();
     }
 
     public void executeGoBack(){
