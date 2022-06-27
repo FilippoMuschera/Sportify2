@@ -1,6 +1,4 @@
 
-q
-Asrc/main/java/com/sportify/addsportcenter/AddSportCenterBean.java,7\8\7893631a6620f0c368281d04a8342081745ad675
 w
 Gsrc/main/java/com/sportify/bookmatch/statemachine/BMStateInterface.java,4\0\406973d3fc1064c2b274a41e66e13b1f12cdfcb3
 ƒ
@@ -15,8 +13,6 @@ h
 8src/main/java/com/sportify/bookmatch/CustomTilePane.java,2\5\2586488a55014c716cd81abd47b52a6ea2f7b863
 ]
 -src/main/java/com/sportify/cli/SignUpCLI.java,6\2\62af16de2e10a096212bd1fec353ffc12d5da543
-\
-,src/main/java/com/sportify/cli/StartCLI.java,9\d\9d14dc8730c543be104d123aa2c235f9b5fba246
 a
 1src/main/java/com/sportify/email/EmailThread.java,3\5\35da6a8cbf5896d193fcf95800865d172cc51b68
 _
@@ -25,8 +21,6 @@ e
 5src/main/java/com/sportify/login/LogInController.java,a\f\af2678ef08a3d581b8c614851e536b5ab1208a74
 _
 /src/main/java/com/sportify/login/LogInView.java,4\4\445b5e8a61eee7054b45bd12aaf3ab0db8ca32d4
-e
-5src/main/java/com/sportify/settings/SettingsBean.java,8\2\82ef94dfba7ffd707da432f71cea4ae3745ec58f
 k
 ;src/main/java/com/sportify/settings/SettingsController.java,8\f\8f3cb6181ab52ab57215412668fc4dac0ee8fb82
 o
@@ -55,8 +49,6 @@ d
 4src/main/java/com/sportify/user/UserPreferences.java,9\f\9f1c11bb05a5059b87f9a67886d38a34d72ddeee
 j
 :src/main/java/com/sportify/utilitiesui/HomeScreenView.java,8\2\82f39bb28b714a128db9326ee56d2bfaef14058d
-c
-3src/main/java/com/sportify/utilitiesui/StartUI.java,5\e\5e273300312a9b198adeab4e1756ece61b8870e3
 h
 8src/main/java/com/sportify/utilitiesui/UIController.java,6\4\646ff5f6d24cfd68c8a744ea860f1dc16c12396c
 a

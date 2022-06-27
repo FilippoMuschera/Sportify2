@@ -85,7 +85,7 @@ public class SettingsBean {
     }
 
     public void setCap(String cap) {
-        Pattern validCAP = Pattern.compile("^[0-9]{5}$"); //valida sintatticamente il CAP
+        Pattern validCAP = Pattern.compile("^\\d{5}$"); //valida sintatticamente il CAP
         Matcher m = validCAP.matcher(cap);
         if (!m.find()){
             throw new IllegalArgumentException("Invalid ZIP code!");

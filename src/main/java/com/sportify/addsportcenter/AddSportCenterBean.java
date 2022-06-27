@@ -28,7 +28,7 @@ public class AddSportCenterBean {
             throw new IllegalArgumentException("sport Center Address cannot be empty!");
         if (sportCenterAddress.split(",").length != 3)
             throw new IllegalArgumentException("Address is malformed. Please use the format: Street HouseNumber, City, ZIP Code");
-        Pattern validCAP = Pattern.compile("^[0-9]{5}$"); //valida sintatticamente il CAP
+        Pattern validCAP = Pattern.compile("^\\d{5}$"); //valida sintatticamente il CAP
         //Analizza il 3o pezzo dell'address (è già stato controllato che ce ne siano esattamente tre), rimuove gli spazi
         //in eccesso con "trim()" e lo confronta con la regex
         Matcher m = validCAP.matcher(sportCenterAddress.split(",")[2].trim());
